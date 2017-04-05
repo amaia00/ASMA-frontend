@@ -1,0 +1,555 @@
+#content {
+	
+    padding: 0 0 50px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+   position: relative;
+    padding-top: 70px !important;
+	
+}
+html {
+    position: relative;
+}
+.accueil , .accueil body , .accueil #content{
+    height: 100%
+}
+ul {
+    padding-left: 0;
+}
+html,body{
+	
+    min-height: 100%;
+    font-family: 'Open Sans', sans-serif;
+}
+header {
+	padding: 20px 0;
+    background-color: #1668b2;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    position: fixed;
+    z-index: 99999;
+    width: 100%;
+    box-shadow: 1px 1px 10px #000;
+}
+#menu li {
+	display: inline-block;
+    padding: 0 5px;
+    border-left: 1px solid #fff;
+    font-size: 13px;
+    font-weight: lighter;
+    font-family: 'Open Sans', sans-serif;
+}
+#menu li a {
+	color: #fff !important;
+}
+#menu li a:hover {
+	text-decoration: underline;
+}
+#menu li:first-child {
+	border-left: none;
+}
+#menu {
+	display: block;
+	float: right;
+}
+.btn-search {
+	background: #022a3b;
+    border: 0;
+    color: #fff;
+    display: block;
+    width: 100%;
+    margin: 50px 0;
+
+}
+label {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: normal;
+	color: #fff;
+}
+.btn-search:hover {
+	background-color:  #000;
+	color: #fff;
+}
+.form-group {
+	margin-bottom: 30px;
+}
+.logo span {
+	color:#fff;
+	padding-left: 5px;
+	font-size: 16px;
+}
+.storage-control-more, .storage-control-less{
+	display: none;
+}
+.taille, #correspondance_wrapper {
+    width: 100% !important;
+    margin: 0 auto;
+    float: right;
+    vertical-align: top;
+}
+.tableaux td {
+    text-align: center;
+}
+#correspondance_filter {
+    float: left;
+}
+#correspondance_filter input {
+
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.20;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+}
+#correspondance_filter label {
+    color: #1668b2
+}
+.dataTables_wrapper .dataTables_length {
+    float: right !important;
+    text-align: right;
+    padding: 10px 0;
+}
+.dataTables_length select {
+        color: #1668b2;
+}
+.dataTables_length label {
+     color: #1668b2;
+}
+#correspondance_wrapper {
+    padding-top: 30px;
+}
+.dataTables_wrapper .dataTables_paginate {
+    padding-top: 10px !important;
+}
+.invalide {
+    color: #d9534f;
+}
+.valide {
+    color: #5cb85c;
+}
+.carte {
+    background: url('../images/backg_maps.png');
+    border-top: 0 !important;
+    border-bottom: 0;
+    width: 40px;
+}
+footer {
+    padding: 10px 0;
+    background-color: #1668b2;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+#correspondance.dataTable tbody th, #correspondance.dataTable tbody td {
+padding: 20px 10px;
+}
+
+h2, h4, h5 {
+    margin-top: 0;
+}
+.informations h2 {
+    color: #1668b2;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 2px solid #1668b2;
+    margin-left: -10px;
+    margin-right: -10px;
+    padding-bottom: 10px; 
+}
+.informations {
+    padding-left: 0;
+    padding-right: 0;
+  
+
+}
+.informations .form-control {
+    background: transparent;
+    border: 0;
+    box-shadow: 0 0 0;
+    border-bottom: 2px solid #1668b2;
+    color: #022a3b
+}
+.pal {
+    padding-left: 10px;
+    padding-right: 10px;
+    left: 0;
+}
+.par {
+    padding-right: 10px;
+    padding-left: 10px;
+    right: 0;
+    z-index: 9999;
+    top:0;
+}
+.par, .pal {
+    padding-top: 10px;
+    padding-bottom: 0;
+}
+.modal-content {
+    position: relative;
+}
+.informations h6 {
+    font-size: 14px;
+    color: #000;
+    font-weight: lighter;
+    padding-top: 15px;
+    margin-bottom: 0;
+    margin: 0;
+}
+#myModal .modal-dialog.modal-lg .modal-content iframe {
+    min-height: 550px;
+}
+#myModal .modal-dialog.modal-lg .modal-content {
+   /*<!-- height: 550px;-->
+    overflow: scroll;*/
+}
+h3 {
+    text-align: center;
+}
+.download {
+   width: 80%;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding: 20px;
+    text-align: center;
+}
+.download li {
+    list-style-type: none;
+    text-align: center;
+    line-height: 55px;
+}
+.download li a {
+    color: #fff;
+    background: #1668b2;
+    height: 60px;
+    line-height: 50px;
+    width: 250px;
+    margin: 20px auto;
+    
+}
+.download li a i {
+    color:#000;
+}
+.download li:last-child{
+    border-bottom: 0;
+}
+span.nav_menu_left_search {
+    font-size: 22px;
+    cursor: pointer;
+    float: left;
+    margin-right: 40px;
+    text-align: left;
+
+}
+.logo {
+    text-align: center;
+    padding: 0 40px;
+}
+.form_close {
+    color: #fff;
+    text-align: right;
+    font-size: 30px;
+    display: block;
+}
+#mapid {
+    height: 100%;
+    width: 100%;
+}
+.search {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding: 0;
+    background-color: #f5f4f4;
+    margin: auto;
+    border-right: 4px solid #1668b2;
+    box-shadow: 2px 2px 5px #000;
+    box-sizing: border-box;
+    padding: 60px 20px;
+    display: none;
+}
+.search label:first-child {
+    color: #022a3b;
+    text-align: center;
+    display: block;
+    font-size: 25px;
+    border-bottom: 5px double #022a3b;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+
+}
+.form_close {
+    display: none;
+}
+.form-control {
+    box-shadow: 0 0 0;
+    border-radius: 0;
+    margin-top: 10px;
+}
+.search img {
+    margin: 30px auto;
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    border: 0;
+}
+.valide_popup h6{
+	text-align: left;
+}
+a, a:hover{
+	color: inherit;
+	text-decoration: none;
+}
+.active {
+	font-weight: 900;
+	text-decoration: underline;
+}
+
+.search .alert {
+    display: none;
+}
+/* Modals content download */
+
+#myModal1 .modal-content {
+    background: #f5f4f4;
+    width: 70%;
+    margin: auto;
+}
+#myModal1 .btn-search:hover {
+    background: #022a3b;
+}
+.down_btn {
+    width: 200px;
+    margin: 40px 0 10px;
+    float: right;
+}
+#correspondance>tbody>tr>td, 
+#correspondance>tbody>tr>th, 
+#correspondance>tfoot>tr>td, 
+#correspondance>tfoot>tr>th, 
+#correspondance>thead>tr>td, 
+#correspondance>thead>tr>th {
+    border: 1px solid #000;
+        border-bottom: 0;
+    border-right: 0;
+}
+#correspondance>tbody>tr>td:last-child, 
+#correspondance>tbody>tr>th:last-child, 
+#correspondance>tfoot>tr>td:last-child, 
+#correspondance>tfoot>tr>th:last-child, 
+#correspondance>thead>tr>td:last-child, 
+#correspondance>thead>tr>th:last-child {
+        border-right: 1px solid #000;
+
+    
+}
+#correspondance_wrapper.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+#correspondance_wrapper.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover , #correspondance_wrapper.dataTables_wrapper 
+.dataTables_paginate .paginate_button:hover{
+    background: #1668b2;
+    color: #fff !important;
+    border-radius: 46px;
+    -webkit-border-radius: 46px;
+    -moz-border-radius: 46px;
+    border: 0;
+ }
+#correspondance_wrapper.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border: 0;
+}
+#map_correspondance {
+   
+    height: 700px;
+}
+#map {
+    height: 180px;
+
+}
+#corresp.modal-dialog , #corresp .modal-content , #corresp .modal-content  #content,
+ #maps{
+    height: 100%;
+}
+#corresp .modal-content  #content{
+    padding: 0;
+    background: #dedede;
+}
+.grill{
+    padding-left: 0;
+    padding-right: 0;
+    height: 100%;
+    border: 2px solid #1668b2;
+
+}
+.color_marker_osm {
+    color :#8ac719;
+    padding-right: 10px;
+}
+.color_marker_gn  {
+    color: #d12269;
+    padding-right: 10px;
+}
+.score_pertinences h5 , .matching{
+    color: #1668b2;
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+    padding: 15px;
+    box-shadow: inset 0 0 1em #000, 0 0 2em transparent;
+    margin: 10px;
+ 
+
+}
+#corresp .modal-content  #content {
+	overflow: auto;
+}
+
+.logo span {
+vertical-align: text-top;
+}
+
+@keyframes bounce{
+    from {top: 5px;}
+    50%  {top: 0px;}
+    to   {top: 5px;}
+}
+ul {
+    list-style: none;
+}
+.item_gn  p {
+    font-size: 19px;
+    text-align: center;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+.item_gn::after {
+    content: "";
+    width: 50%;
+    background: #1668b2;
+    height: 2px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.item_gn  p:last-child{
+    font-style: italic;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.search .resultats label {
+    display: none;
+}
+.titre {
+   border:3px solid #1668b2;
+   padding: 10px 5px;
+   background:#022a3b ;
+   text-align: center;
+   font-size: 15px;
+   font-style: italic;
+   margin: 15px 0;
+   color: #ffffff;
+}
+#content .leaflet-popup-content a {
+    color:#000;
+    font-size: 12px;
+}
+#content .leaflet-popup-content span {
+    margin-right: 5px;
+}
+#content .leaflet-popup-content a:hover {
+    text-decoration: underline;
+}
+.leaflet-touch .leaflet-bar{
+    margin-top: 90px !important;
+}
+
+#corresp .modal-content  #content>div.score_pertinences {
+    height: auto;
+    overflow:visible;
+    clear: both;
+}
+.progress {
+    margin-top: 30px;
+}
+.modal {
+    z-index: 99999;
+}
+.modal-content #content {
+    padding-top: 0 !important;
+}
+.valide_popup button {
+	width: 25px;
+    height: 25px;
+    line-height: 15px;
+    padding: 0;
+    font-size: 10px;
+    float: right;
+    margin-left: 5px;
+}
+.content_map {
+	overflow: hidden;
+}
+.config_image {
+	border: 3px solid #1668b2;
+	display: block;
+	margin: 20px auto;
+	border-radius: 20px;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+}
+h6 {
+	font-size: 16px;
+	text-align: center;
+	color: #000;
+	line-height: 20px;
+	margin: 20px 0;
+
+}
+
+#config thead {
+    background: #1668b2;
+    color: #fff;
+}
+#config thead tr th:last-child {
+	width: 50%;
+}
+#config thead tr th:first-child {
+	width: 25%;
+}
+#config tbody tr td input {
+	width: 100%;
+	padding: 0 10px;
+}
+#config tbody tr td:first-child {
+	text-align: left;
+}
+#patientez .modal-title {
+	background: #1668b2;
+	color:#fff;
+	padding: 20px 0;
+	text-align: center;
+}
+#patientez .modal-header {
+	padding: 0;
+}
+#patientez .modal-body {
+	text-align: center;
+	margin: 20px 0;
+}
+table.dataTable tbody tr {
+	background-color: #f9f9f9 !important;
+}
+.modal-lg {
+	width: 80%;
+}

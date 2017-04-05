@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Application TER</title>
+    <!-- To ensure proper rendering and touch zooming,-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <script src="javascript/script_js.js"></script>
+    <script src="javascript/maps_correspondance.js"></script>
+    <script type="text/javascript" src="DataTables/datatables.min.js"></script>
+
+
+
+
+
+</head>
+<body>
+<header>
+    <div class="logo"><a href="index.html">Nom de l'application
+        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>	</a>
+        <a href="index.html">
+            <span  style='vertical-align: text-top;' class="glyphicon glyphicon-search nav_menu_left nav_menu_left_search" aria-hidden="true"></span>
+        </a>
+        <span  style='vertical-align: text-top;' class="nav_menu_left_search glyphicon glyphicon-remove closebtn form_close" aria-hidden="true"></span>
+        <ul id ="menu">
+            <li><a>A propos </a></li>
+            <li><a class="active" href="configuration.html">Configuration </a></li>
+            <li><a> Contact </a></li>
+
+        </ul>
+    </div>
+</header>
+
+<form class="search">
+    <div class="form-group">
+        <label for="Rechercher">Rechercher </label>
+        Nom :
+        <input type="text" class="form-control" id="Rechercher" placeholder="Entrer le nom d'une place">
+    </div>
+    <button type="submit" class="btn btn-default btn-search">Rechercher <span  style='vertical-align: text-top;' class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+    </button>
+    <img src="images/img_localisation.png" width="290" class="config_image"/>
+</form>
+<div id="content">
+    <div class="container">
+
+        <h6>Vous pouvez changer les coefficients des attributs de décisons permettant de calculer le score de pertinance .<br/>
+            La valeur de chaque coefficient doit être borné entre 0 et 1.</h6>
+        <img src="images/config.png" width="250"  class="config_image"/>
+        <table id="config" class="table table-striped taille tableaux">
+
+            <thead>
+            <tr>
+                <th>Nom du coefficient</th>
+                <th>Valeur du coefficient</th>
+                <th>Description du coefficient</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Distance de Levenshtein</td>
+                <td><input type="number" name="distance_leve" min="0" max="1" value="0.5"></td>
+                <td> c'est une mesure de la similarité entre deux chaînes de caractères. Elle est égale au nombre minimal de caractères
+                    qu'il faut supprimer, insérer ou remplacer pour passer d’une chaîne à l’autre.</td>
+
+            </tr>
+            <tr>
+                <td>Distance Ratio</td>
+                <td><input type="number" name="distance_ratio" min="0" max="1" value="0.5"></td>
+                <td> c'est une mesure utilisée pour l'algorithme de blocking. ,
+                   il permet de construire un espace à l'environ des coordonnées géographiques d'un point donnée .</td>
+
+            </tr>
+            <tr>
+                <td>Poids du nom de l'entité</td>
+                <td><input type="number" name="weight_name" min="0" max="1"  value="0.2"></td>
+                <td> Le poids donné au titre de l'entité pour calculer le score de pertinence.</td>
+
+            </tr>
+            <tr>
+                <td>Poids du type de l'entité</td>
+                <td><input type="number" name="weight_type" min="0" max="1"  value="0.4"></td>
+                <td> Le poids donné au type de l'entité pour calculer le score de pertinence.</td>
+
+            </tr>
+            <tr>
+                <td>Poids des coordonnées géographiques de l'entité</td>
+                <td><input type="number" name="weight_geographical_coordinates" min="0" max="1"  value="0.4"></td>
+                <td> Le poids donné aux coordonnées géographiques de l'entité pour calculer le score de pertinence.</td>
+
+            </tr>
+            <tr>
+                <td>Synonyme du type (valeur tag -> description)</td>
+                <td><input type="number" name="match_type_synonym_value" min="0" max="1" value="0.5"></td>
+                <td> Utilisé lorsqu'un synonyme de la valeur du tag de osm est trouvé  dans la description de geoname</td>
+
+            </tr>
+            <tr>
+                <td>Synonyme du type (tag -> description)</td>
+                <td><input type="number" name="match_type_synonym_key" min="0" max="1" value="0.3"></td>
+                <td> Utilisé lorsqu'un synonyme  du tag de osm est trouvé  dans la description de geoname</td>
+
+            </tr>
+            <tr>
+                <td>Synonyme du type (description ->valeur tag)  </td>
+                <td><input type="number" name="match_type_description_value" min="0" max="1" value="0.7"></td>
+                <td> Utilisé lorsqu'un synonyme de la description de geoname  est trouvé dans la valeur du tag de osm </td>
+
+            </tr>
+            <tr>
+                <td>Synonyme du type (description -> tag)  </td>
+                <td><input type="number" name="match_type_description_key" min="0" max="1" value="0.6"></td>
+                <td> Utilisé lorsqu'un synonyme de la description de geoname  est trouvé dans le tag de osm </td>
+
+            </tr>
+            <tr>
+                <td>Match Proche  </td>
+                <td><input type="number" name="match_type_close" min="0" max="1" value="1"></td>
+                <td> Utilisé au moment ou
+                    deux entités ont un match proche qui a été definié.</td>
+
+            </tr>
+            <tr>
+                <td>Match type Direct  </td>
+                <td><input type="number" name="match_type_description_key" min="0" max="1" value="0.8"></td>
+                <td> Utilisé au moment ou deux entités ont un match à niveau de type direct. </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer>
+    <p>
+
+    </p>
+</footer>
+</body>
+</html>

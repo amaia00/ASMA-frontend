@@ -1,0 +1,77 @@
+/***************************************** OSM *************************************************************************************/
+-- Amenity : Équipements 
+Utilisé pour cartographier les équipements pour les visiteurs et les résidents comme: toilettes, téléphones, banques, pharmacies, écoles. 
+Voir Amenities pour une introduction.
+
+-- Highway : Routes
+Le tag highway =* est le tag principal pour toutes les voies de circulation terrestre. 
+C'est le minimum pour voir apparaître ce type de voies sur une carte. 
+Les conventions peuvent différer d'un pays à l'autre. 
+
+-- Artisanat (craft)
+Fabrication ou transformation de biens personnalisés.
+
+/************************************************************************************************************************************/
+/****************************************** GN *************************************************************************************/
+
+H stream, lake : H ruisseau, lac 
+L parks,area : L parcs, la région
+/************************************************************************************************************************************/
+
+(1) : Nom GN
+(2) : Nom OSM
+(3) : Description GN
+(4) : Description OSM
+(5) : Nom attribué
+
+---------------------------------------------------------------------------------
+1. 	ok S BUSTP	busstop	/ highway = bus_stop / A small bus stop / Bus Stop
+2.  ok S LIBR	library, amenity = library	, A place in which information resources such as books are kept for reading, reference, or lending.
+3. 	ok S STPS steps, highway = steps, For flights of steps (stairs) on footways. Use with step_count=* to indicate the number of steps , step
+4. 	ok S SCHL language school , amenity = language_school , language school
+5.  ok S BANK	bank, amenity = bank ou amenity = bureau_de_change , A business establishment in which money is kept for saving or commercial purposes or is invested, supplied for loans, or exchanged.
+6.	ok V VETF veterinary facility	, amenity = veterinary, a building or camp at which veterinary services are available , veterinary
+7. 	ok C CSNO casino, amenity = casino  &&  amenity = gambling, a building used for entertainment, especially gambling, Casino
+8. 	ok S ZOO zoo, tourism = zoo ,  Zoo is an abbreviation for a zoological garden or park that has confined animals on display for viewing by the public., ZOO
+9. 	ok TNLN	natural tunnel	 natural = cave_entrance , grotte , a cave that is open at both ends
+10. ok S PKLT parking lot , amenity = parking ou highway=service and service=parking_aisle,  an area used for parking vehicles
+11. ok R TNLN natural tunnel,  natural =  cave_entrance , a cave that is open at both ends
+12. ok S HTL hotel , tourism = hotel , Hotels provide accommodation for guests with usually numbered rooms. Some facilities provided may include a basic bed, storage for clothing and additional guest facilities may include swimming pool,
+ childcare, and conference facilities. , Hotel
+13. ok A PCLI independent political entity ,  boundary=administrative, admin_level=2  border_type	territorial ou aussi place = country,  pays
+14. ok A ADM1 first-order administrative division ,  boundary=administrative, admin_level=4 , Region comme par exemple nord pas de calais
+15. ok S ATM	automatic teller machine, amenity = atm	,  an ATM or cash point
+16. ok S CTHSE	courthouse , amenity = courthouse	, Palais de justice.
+17. ok S CMTY cemetery ,landuse = cemetery  ou amenity	grave_yard, Cimetière.
+18. OK S MKT market, amenity = marketplace, Place de marché.
+19. ok S PP police post, amenity = police , Zone	Poste de police, Gendarmerie, a building in which police are stationed
+20. ok S PO post office amenity = post_office	, Bureau de poste.
+21. ok S PRN prison , amenity = prison , Prison
+22. ok S REST restaurant, amenity = restaurant ou  amenity = fast_food  ou amenity = ice_cream, A place where meals are served to the public
+23. ok S THTR theater, amenity = cinema ou amenity = theatre, A building, room, or outdoor structure for the presentation of plays, films, or other dramatic performances
+24. ok H FISH fishing area,leisure = fishing, Zone de pêche
+25. ok S stadium STDM, leisure = stadium , Stade. Une arène sportive, avec un nombre conséquent de sièges. Pour décrire quel type de sport(s) utilisez sport=*
+26. ok S GATE	gate , aeroway = gate , a controlled access entrance or exit il peut etre combiné avec ref pour numero de porte ici deja dans e cas d'embarquement 
+27. ok S AIRH	heliport , aeroway = heliport, a place where helicopters land and take off ( Aéroport destiné exclusivement aux hélicoptères.)
+28. ok S MSQE	mosque,  amenity = place_of_worship && building	 = mosque,a building for public Islamic worship
+29. ok S BCN	beacon, man_made = beacon , a fixed artificial navigation mark // pas sur
+30  ok S AIRP	airport	, aeroway = runway && aeroway = aerodrome , a place where aircraft regularly land and take off,
+ with runways, navigational aids, and major facilities for the commercial handling of passengers and cargo
+31. ok S STNR	radio station ,man_made = communications_tower, 
+32. ok S MLWTR	water mill, man_made = watermill , Moulin à eau, la plupart du temps ancien et hors service.
+33. ok S MLWND	windmill , man_made = windmill , a mill or water pump powered by wind (Moulin a vent )
+34. ok S MFGB brewery, craft = brewery ,  Brasserie. Bâtiment dédié à la fabrication de la bière.
+35. ok S HSPC	clinic, amenity = clinic , Un établissement médical associé à un hôpital pour les patients externes
+36. ok L CONT	continent	, place = continent , continent: Europe, Africa, Asia, North America, South America, Oceania, Antarctica
+37. ok S PS power station, power generator , a facility for generating electric power
+38. ok T PK peak ,natural = peak , Sommet d'une colline ou d'une montagne 
+39. ok S HSP	hospital,  amenity = hospital , Hopitale
+40. ok S RSTN railroad  station , railway = station ,  facility comprising ticket office, platforms, etc. for loading and unloading train passengers and freight
+ 
+
+-___________________________________________________________________________________________________________-
+15. A ADM2 second-order administrative division ,  boundary=administrative, admin_level=5 , departement
+/*acceder a 9 8 est limite de 5
+// limite adminnistrative 
+16. A ADM3 third-order administrative division ,  boundary=administrative, admin_level=9 ,  prefecture
+_____________________________________________________________________________________________________________
