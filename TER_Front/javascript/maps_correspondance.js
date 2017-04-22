@@ -41,7 +41,7 @@ function valider_invalider_sans_detail(url, reference_gn,reference_osm) {
                     if(information_data.length==0){
                         data_table.clear().draw();
                             toastr.options = {
-                                "showDuration": "300",
+                                "showDuration": "500",
                                 "hideDuration": "1000",
                                 "timeOut": "500",
                                 "extendedTimeOut": "0"
@@ -56,7 +56,12 @@ function valider_invalider_sans_detail(url, reference_gn,reference_osm) {
                         data_table.draw();
 
 
-
+                        toastr.options = {
+                            "showDuration": "500",
+                            "hideDuration": "1000",
+                            "timeOut": "500",
+                            "extendedTimeOut": "0"
+                        },
                         toastr.success('Les entités ont été ajouté  ! Merci', {fadeAway: 100});
 
                     }
@@ -105,7 +110,7 @@ function valider_invalider(url, reference_gn,reference_osm) {
                             id_next =correspondence_table.children("tr:first").attr('id');
                             if (id_next == undefined) {
                                 toastr.options = {
-                                    "showDuration": "300",
+                                    "showDuration": "500",
                                     "hideDuration": "1000",
                                     "timeOut": "500",
                                     "extendedTimeOut": "0"
@@ -123,7 +128,7 @@ function valider_invalider(url, reference_gn,reference_osm) {
                             slider(id_next);
                         }
                         toastr.options = {
-                            "showDuration": "300",
+                            "showDuration": "500",
                             "hideDuration": "1000",
                             "timeOut": "500",
                             "extendedTimeOut": "0"
@@ -132,7 +137,7 @@ function valider_invalider(url, reference_gn,reference_osm) {
                     },
                     error: function (request, status, error) {
                         toastr.options = {
-                            "showDuration": "300",
+                            "showDuration": "500",
                             "hideDuration": "1000",
                             "timeOut": "500",
                             "extendedTimeOut": "0"
@@ -222,9 +227,21 @@ $(document).on('shown.bs.modal','#myModal ', function () {
                     data: JSON.stringify(data),
 
                     success: function (data) {
+                        toastr.options = {
+                            "showDuration": "500",
+                            "hideDuration": "1000",
+                            "timeOut": "500",
+                            "extendedTimeOut": "0"
+                        }
                         toastr["success"]('La correspondance a été enregistré ! Merci');
                         },
                     error: function(request, status, error) {
+                        toastr.options = {
+                            "showDuration": "500",
+                            "hideDuration": "1000",
+                            "timeOut": "500",
+                            "extendedTimeOut": "0"
+                        }
                         toastr["error"]('Une erreur s\'est produite réessayer plus tard');
 
                         },
@@ -247,6 +264,8 @@ $(document).on('shown.bs.modal','#myModal ', function () {
         valider_invalider('http://localhost:8000/correspondence-valide', reference_gn, reference_osm);
     });
     $(document).on('click',"#invaliderCorrespondance",function (event) {
+        var reference_gn = $("#entity_geoname span").text().slice(4);
+        var reference_osm = $("#entity_osm span").text().slice(4);
         valider_invalider('http://localhost:8000/correspondence-invalide', reference_gn, reference_osm);
     });
 
@@ -482,6 +501,12 @@ function array_information(gn) {
         },
 
         error: function () {
+            toastr.options = {
+                "showDuration": "500",
+                "hideDuration": "1000",
+                "timeOut": "500",
+                "extendedTimeOut": "0"
+            }
             toastr["error"]('Une erreur s\'est produite réessayer plus tard');
 
         },
