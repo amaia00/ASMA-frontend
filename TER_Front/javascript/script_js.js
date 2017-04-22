@@ -1,6 +1,6 @@
 $(document).ready(function(){
    $(".carte a").click(function()  {
-  // do something…
+
 
   var height1 = $(".informations").height();
   var height2 = $(".informations").height();
@@ -51,26 +51,6 @@ $(".form_close").click(function() {
 
 ////////////////////
 
-$(".storage-control-more").css("display","none");
-$(".storage-control-more").css("display","none");
-if($("#correspondance").length!=0) {
 
-    $('#correspondance').DataTable({
-        "language": {
-            "lengthMenu": " Nombre de ligne par page _MENU_",
-            "zeroRecords": "Pas de resultat trouvé",
-            "info": " ",
-            "infoEmpty": "No records available",
-            "search": "Rechercher :",
-            "infoFiltered": "( _MAX_ total entrés)",
-            "paginate": {
-                "first": "Premier",
-                "last": "Dernier",
-                "next": "Suivant",
-                "previous": "Précédent"
-            },
-        }
-    });
-}
 
  });
