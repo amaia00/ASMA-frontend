@@ -126,13 +126,16 @@ label {
 .dataTables_wrapper .dataTables_paginate {
     padding-top: 10px !important;
 }
-#invalide {
+.invalide {
     color: #d9534f;
     cursor:pointer;
 }
-#valide {
+.valide {
     color: #5cb85c;
     cursor:pointer;
+}
+.valide:hover, .invalide:hover {
+    font-size: 15px;
 }
 .carte {
     background: url('../images/backg_maps.png');
