@@ -11,18 +11,8 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-    <script src="javascript/script_js.js"></script>
-    <script src="javascript/maps_correspondance.js"></script>
-    <script type="text/javascript" src="DataTables/datatables.min.js"></script>
-
-
-
-
 
 </head>
 <body>
@@ -56,89 +46,116 @@
     <div class="container">
 
         <h6>Vous pouvez changer les coefficients des attributs de décisons permettant de calculer le score de pertinance .<br/>
-            La valeur de chaque coefficient doit être borné entre 0 et 1.</h6>
-        <img src="images/config.png" width="250"  class="config_image"/>
-        <table id="config" class="table table-striped taille tableaux">
+            La valeur de chaque coefficient dans les paramètres du score de pertinence doit être borné entre 0 et 1.</h6>
+        <div class="panel-group" id="accordion">
+            <div  id="panel1"class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                            Paramètres de score de pertinence <i class="fa fa-plus" aria-hidden="true"></i></a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="plus_info">Plus d'informations<button type="button" title="Add new specific type" class="add_type" id="show_more">
+                            <i class="fa fa-plus" aria-hidden="true"></i></button></div>
+                        <h6><i class="fa fa-snowflake-o" aria-hidden="true"></i> Valeur par défaut pour les autres types</h6>
+                        <div class="name_parametre"><label>Nom du paramètre : </label>
+                            <ul id="name_parametre"></ul>
+                            <br>
+                            <label>Valeur( entre 0 et 1) : </label>
+                            <ul id="valeur_parametre"></ul>
+                            <br>
 
-            <thead>
-            <tr>
-                <th>Nom du coefficient</th>
-                <th>Valeur du coefficient</th>
-                <th>Description du coefficient</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Distance de Levenshtein</td>
-                <td><input type="number" name="distance_leve" min="0" max="1" value="0.5"></td>
-                <td> c'est une mesure de la similarité entre deux chaînes de caractères. Elle est égale au nombre minimal de caractères
-                    qu'il faut supprimer, insérer ou remplacer pour passer d’une chaîne à l’autre.</td>
+                            <label>Valeur par défaut</label>
+                            <input type="checkbox" name="alltype" value="alltype" id="type_default" checked>Tous les types
+                        <div class="separateur"></div>
+                        <h6><i class="fa fa-snowflake-o" aria-hidden="true"></i> Valeur pour des types bien spécifiques</h6>
+                        <div class="name_parametre_specific"><label>Nom du paramètre : </label>
+                            <ul id="name_parametre_speci"></ul>
+                            <label>Valeur( entre 0 et 1) : </label>
+                            <ul id="valeur_parametre_speci"></ul>
+                            <br>
+                            <div class="parametre_type_specific">
+                                <div class="osm_type">
+                                    <div class="sous_cat">
+                                        <label>Clé OpenStreetMap</label>
+                                        <input id="cle_osm" type="text" class="form-control" placeholder="Par exemple 'amenity'"/>
+                                    </div>
+                                    <div class="sous_cat">
+                                        <label>Valeur OpenStreetMap</label>
+                                        <input id="valeur_osm" type="text" class="form-control" placeholder="Par exemple 'restaurant'"/>
+                                    </div>
+                                </div>
+                                <div class="geoname_type">
+                                    <div class="sous_cat">
+                                        <label>Classe Geoname</label>
+                                        <input id="class_gn" type="text" class="form-control" placeholder="Par exemple 'S' "/>
+                                    </div>
+                                    <div class="sous_cat">
+                                        <label>code Geoname</label>
+                                        <input id="code_gn" type="text" class="form-control" placeholder="Par exemple 'rest' "/>
+                                    </div>
+                                </div>
+                            </div>
 
-            </tr>
-            <tr>
-                <td>Distance Ratio</td>
-                <td><input type="number" name="distance_ratio" min="0" max="1" value="0.5"></td>
-                <td> c'est une mesure utilisée pour l'algorithme de blocking. ,
-                   il permet de construire un espace à l'environ des coordonnées géographiques d'un point donnée .</td>
 
-            </tr>
-            <tr>
-                <td>Poids du nom de l'entité</td>
-                <td><input type="number" name="weight_name" min="0" max="1"  value="0.2"></td>
-                <td> Le poids donné au titre de l'entité pour calculer le score de pertinence.</td>
+                        </div>
+                        <div class="rectangles_information">
+                    </div>
+                    </div>
+                        <div class="footer_btn">
+                        <button type="button" title="Add new specific type" class="add_type" id="send_type">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Enregistrer</button>
+                        <button type="button" title="Add new specific type" class="add_type" id="defaut_param">
+                            <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Revenir au valeur actuelle</button>
+                        <button type="button" title="Add new specific type" class="add_type" id="demare">
+                            <i class="fa fa-cog" aria-hidden="true"></i>Démarer</button></div>
+                    </div>
+                </div>
+            </div>
+            <div id="panel2" class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                            Parametres pour l'alignement et le blocking <i class="fa fa-plus" aria-hidden="true"></i></a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <table id="config" class="table table-striped taille tableaux">
 
-            </tr>
-            <tr>
-                <td>Poids du type de l'entité</td>
-                <td><input type="number" name="weight_type" min="0" max="1"  value="0.4"></td>
-                <td> Le poids donné au type de l'entité pour calculer le score de pertinence.</td>
+                            <thead>
+                            <tr>
+                                <th>Nom du coefficient</th>
+                                <th>Valeur du coefficient</th>
+                                <th>Description du coefficient</th>
+                                <th class="datatable-nosort">Modifier</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-            </tr>
-            <tr>
-                <td>Poids des coordonnées géographiques de l'entité</td>
-                <td><input type="number" name="weight_geographical_coordinates" min="0" max="1"  value="0.4"></td>
-                <td> Le poids donné aux coordonnées géographiques de l'entité pour calculer le score de pertinence.</td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-            </tr>
-            <tr>
-                <td>Synonyme du type (valeur tag -> description)</td>
-                <td><input type="number" name="match_type_synonym_value" min="0" max="1" value="0.5"></td>
-                <td> Utilisé lorsqu'un synonyme de la valeur du tag de osm est trouvé  dans la description de geoname</td>
-
-            </tr>
-            <tr>
-                <td>Synonyme du type (tag -> description)</td>
-                <td><input type="number" name="match_type_synonym_key" min="0" max="1" value="0.3"></td>
-                <td> Utilisé lorsqu'un synonyme  du tag de osm est trouvé  dans la description de geoname</td>
-
-            </tr>
-            <tr>
-                <td>Synonyme du type (description ->valeur tag)  </td>
-                <td><input type="number" name="match_type_description_value" min="0" max="1" value="0.7"></td>
-                <td> Utilisé lorsqu'un synonyme de la description de geoname  est trouvé dans la valeur du tag de osm </td>
-
-            </tr>
-            <tr>
-                <td>Synonyme du type (description -> tag)  </td>
-                <td><input type="number" name="match_type_description_key" min="0" max="1" value="0.6"></td>
-                <td> Utilisé lorsqu'un synonyme de la description de geoname  est trouvé dans le tag de osm </td>
-
-            </tr>
-            <tr>
-                <td>Match Proche  </td>
-                <td><input type="number" name="match_type_close" min="0" max="1" value="1"></td>
-                <td> Utilisé au moment ou
-                    deux entités ont un match proche qui a été definié.</td>
-
-            </tr>
-            <tr>
-                <td>Match type Direct  </td>
-                <td><input type="number" name="match_type_description_key" min="0" max="1" value="0.8"></td>
-                <td> Utilisé au moment ou deux entités ont un match à niveau de type direct. </td>
-
-            </tr>
-            </tbody>
-        </table>
+        </div>
+        <img src="images/config.png" width="200"  class="config_image"/>
+    </div>
+</div>
+<div id="patientez" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Patientez</h2>
+            </div>
+            <div class="modal-body">
+                <i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
     </div>
 </div>
 <footer>
@@ -146,5 +163,15 @@
 
     </p>
 </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="javascript/jquery.blockUI.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<script src="javascript/script_js.js"></script>
+<script src="javascript/maps_correspondance.js"></script>
+<script src="javascript/configuration.js"></script>
+<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </body>
 </html>

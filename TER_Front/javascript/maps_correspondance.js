@@ -114,7 +114,7 @@ function valider_invalider(url, reference_gn,reference_osm) {
                                     "hideDuration": "1000",
                                     "timeOut": "500",
                                     "extendedTimeOut": "0"
-                                }
+                                },
                                 toastr["info"]('Il n\' y plus de correspondence à valider');
                                 $(document.body).removeClass('modal-open');
                                 $("#myModal").removeClass('in');

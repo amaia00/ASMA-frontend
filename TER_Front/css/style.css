@@ -11,6 +11,9 @@
 html {
     position: relative;
 }
+a:focus {
+    text-decoration: none;
+}
 .accueil , .accueil body , .accueil #content{
     height: 100%
 }
@@ -92,10 +95,10 @@ label {
 .tableaux td {
     text-align: center;
 }
-#correspondance_filter {
+#correspondance_filter, #config_filter {
     float: left;
 }
-#correspondance_filter input {
+#correspondance_filter input, #config_filter input {
 
     height: 34px;
     padding: 6px 12px;
@@ -106,7 +109,7 @@ label {
     background-image: none;
     border: 1px solid #ccc;
 }
-#correspondance_filter label {
+#correspondance_filter label, #config_filter label {
     color: #1668b2
 }
 .dataTables_wrapper .dataTables_length {
@@ -346,7 +349,13 @@ a, a:hover{
 #correspondance>tfoot>tr>td, 
 #correspondance>tfoot>tr>th, 
 #correspondance>thead>tr>td, 
-#correspondance>thead>tr>th {
+#correspondance>thead>tr>th,
+#config>tbody>tr>td,
+#config>tbody>tr>th,
+#config>tfoot>tr>td,
+#config>tfoot>tr>th,
+#config>thead>tr>td,
+#config>thead>tr>th {
     border: 1px solid #000;
         border-bottom: 0;
     border-right: 0;
@@ -356,13 +365,22 @@ a, a:hover{
 #correspondance>tfoot>tr>td:last-child, 
 #correspondance>tfoot>tr>th:last-child, 
 #correspondance>thead>tr>td:last-child, 
-#correspondance>thead>tr>th:last-child {
+#correspondance>thead>tr>th:last-child,
+
+#config>tbody>tr>td:last-child,
+#config>tbody>tr>th:last-child,
+#config>tfoot>tr>td:last-child,
+#config>tfoot>tr>th:last-child,
+#config>thead>tr>td:last-child,
+#config>thead>tr>th:last-child{
         border-right: 1px solid #000;
 
     
 }
 #correspondance_wrapper.dataTables_wrapper .dataTables_paginate .paginate_button.current,
 #correspondance_wrapper.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover , #correspondance_wrapper.dataTables_wrapper 
+.dataTables_paginate .paginate_button:hover, #config_wrapper.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+#config_wrapper.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover , #config_wrapper.dataTables_wrapper
 .dataTables_paginate .paginate_button:hover{
     background: #1668b2;
     color: #fff !important;
@@ -371,7 +389,7 @@ a, a:hover{
     -moz-border-radius: 46px;
     border: 0;
  }
-#correspondance_wrapper.dataTables_wrapper .dataTables_paginate .paginate_button {
+#correspondance_wrapper.dataTables_wrapper .dataTables_paginate .paginate_button, #config_wrapper.dataTables_wrapper .dataTables_paginate .paginate_button {
     border: 0;
 }
 #map_correspondance {
@@ -627,7 +645,7 @@ table.dataTable tbody tr {
     margin-top: -5px;
     margin-left: -5px;
 }
-.matching_of_entity {
+.matching_of_entity , #add_type, #show_more, #hide_more, #send_type, #defaut_param, #demare {
     background: #022a3b;
     border: 0;
     color: #fff;
@@ -636,12 +654,13 @@ table.dataTable tbody tr {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 13px;
+    margin-left: 15px;
 
 }
 .matching_of_entity i {
     margin-right: 10px;
 }
-.matching_of_entity:hover {
+.matching_of_entity:hover, #add_type:hover,  #show_more:hover, #hide_more:hover, #demare:hover,  #send_type:hover, #defaut_param:hover {
      background: #1668b2;
 }
 .bouton_entity {
@@ -673,4 +692,119 @@ h2 {
 }
 .hide_class {
     display: none !important;
+}
+
+.name_parametre select, .name_parametre input[type="number"], .name_parametre_specific input[type="number"], .name_parametre_specific select {
+    width: 70%;
+    display: inline-block;
+    margin: 10px 0;
+    margin-right: 15px;
+}
+.name_parametre label , .name_parametre_specific label {
+    width: 20%;
+    color: #1668b2;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 10px 0;
+
+}
+
+#type_default {
+    margin-right: 15px;
+    font-size: 15px;
+}
+.panel-default>.panel-heading {
+    background: #022a3b;
+    color: #fff;
+}
+
+.separateur {
+    width: 150px;
+    height: 3px;
+    background: #1668b2;
+    margin: 10px auto;
+}
+.sous_cat {
+    width: 46%;
+    float: left;
+    margin: 10px 2% 10px 0;
+}
+
+.sous_cat input {
+    width: 200px;
+    display: inline-block;
+}
+.sous_cat label {
+    width: 170px;
+}
+.panel-body {
+    position: relative;
+}
+.panel-body h6 {
+    text-align: left;
+    margin: 30px 0;
+    color: #000;
+}
+.parametre_type_specific {
+    overflow: hidden;
+}
+.para_cat {
+    width: 25%;
+    display: inline-block;
+}
+#valeur_parametre,#valeur_parametre_speci, #name_parametre, #name_parametre li , #name_parametre_speci li ,#valeur_parametre_speci li ,#valeur_parametre li , #name_parametre_speci{
+    display: inline;
+}
+#name_parametre li , #name_parametre_speci li {
+    width: 25%;
+    display: inline-block;
+    text-transform: capitalize;
+    font-size: 13px;
+    vertical-align: top;
+    word-wrap: break-word;
+    padding: 0 2px;
+}
+#name_parametre span, .rectangles_information span , #name_parametre_speci span {
+    color:#d9534f;
+    font-style: italic;
+}
+.rectangles_information {
+    background: #1668b2;
+    padding: 20px;
+    display: none;
+    color: #fff;
+    position: absolute;
+    top: 50px;
+    right: 0;
+}
+
+.plus_info {
+    text-align: right;
+    font-size: 15px;
+}
+.parametre_type_specific {
+    margin-top: 10px;
+}
+.name_parametre {
+    margin-bottom: 40px;
+}
+.footer_btn {
+    text-align: center  ;
+}
+.edit {
+    cursor: pointer;
+    background: #022a3b;
+    color: #fff;
+    font-size: 15px;
+    width: 10%;
+}
+
+#config .name {
+    width: 20%;
+}
+.panel-title i {
+    float: right;
+}
+.panel-title a {
+    display: block;
 }
