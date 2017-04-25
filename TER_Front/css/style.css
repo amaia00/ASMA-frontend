@@ -645,7 +645,7 @@ table.dataTable tbody tr {
     margin-top: -5px;
     margin-left: -5px;
 }
-.matching_of_entity , #add_type, #show_more, #hide_more, #send_type, #defaut_param, #demare {
+.matching_of_entity , #add_type, #show_more, #hide_more, #send_type, #defaut_param, #demare, .add_type , .remove_type {
     background: #022a3b;
     border: 0;
     color: #fff;
@@ -660,7 +660,7 @@ table.dataTable tbody tr {
 .matching_of_entity i {
     margin-right: 10px;
 }
-.matching_of_entity:hover, #add_type:hover,  #show_more:hover, #hide_more:hover, #demare:hover,  #send_type:hover, #defaut_param:hover {
+.matching_of_entity:hover, #add_type:hover,  #show_more:hover, #hide_more:hover, #demare:hover,  #send_type:hover, #defaut_param:hover , .add_type:hover {
      background: #1668b2;
 }
 .bouton_entity {
@@ -694,13 +694,13 @@ h2 {
     display: none !important;
 }
 
-.name_parametre select, .name_parametre input[type="number"], .name_parametre_specific input[type="number"], .name_parametre_specific select {
-    width: 70%;
+.name_parametre select, .name_parametre input[type="number"], .valeur_parametre_speci input[type="number"], .valeur_parametre_speciselect {
+    width: 23%;
     display: inline-block;
     margin: 10px 0;
     margin-right: 15px;
 }
-.name_parametre label , .name_parametre_specific label {
+.name_parametre label , .name_parametre_specific label, .all_element_config label, .name_parametre_specific_autre label {
     width: 20%;
     color: #1668b2;
     font-size: 15px;
@@ -748,14 +748,11 @@ h2 {
 .parametre_type_specific {
     overflow: hidden;
 }
-.para_cat {
-    width: 25%;
-    display: inline-block;
-}
-#valeur_parametre,#valeur_parametre_speci, #name_parametre, #name_parametre li , #name_parametre_speci li ,#valeur_parametre_speci li ,#valeur_parametre li , #name_parametre_speci{
+
+#valeur_parametre, .valeur_parametre_speci, #name_parametre, .name_parametre li , .name_parametre_speci li ,.valeur_parametre_speci li ,#valeur_parametre li , .name_parametre_speci{
     display: inline;
 }
-#name_parametre li , #name_parametre_speci li {
+#name_parametre li , .name_parametre_speci li {
     width: 25%;
     display: inline-block;
     text-transform: capitalize;
@@ -764,7 +761,7 @@ h2 {
     word-wrap: break-word;
     padding: 0 2px;
 }
-#name_parametre span, .rectangles_information span , #name_parametre_speci span {
+#name_parametre span, .rectangles_information span , .name_parametre_speci span {
     color:#d9534f;
     font-style: italic;
 }
@@ -789,7 +786,8 @@ h2 {
     margin-bottom: 40px;
 }
 .footer_btn {
-    text-align: center  ;
+    text-align: center;
+    padding-bottom:40px;
 }
 .edit {
     cursor: pointer;
@@ -807,4 +805,16 @@ h2 {
 }
 .panel-title a {
     display: block;
+}
+.para_cat input {
+    display :inline-block;
+}
+.para_cat {
+    display: inline;
+}
+.name_parametre_speci li , #name_parametre li {
+    line-height: 40px;
+}
+.btn_pardefaut {
+    text-align: center;
 }
