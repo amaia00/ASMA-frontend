@@ -11,6 +11,11 @@
 html {
     position: relative;
 }
+body {
+    background: url('../images/background_map.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
 a:focus {
     text-decoration: none;
 }
@@ -123,9 +128,7 @@ label {
 .dataTables_length label {
      color: #1668b2;
 }
-#correspondance_wrapper {
-    padding-top: 30px;
-}
+
 .dataTables_wrapper .dataTables_paginate {
     padding-top: 10px !important;
 }
@@ -342,7 +345,6 @@ a, a:hover{
 .down_btn {
     width: 200px;
     margin: 40px 0 10px;
-    float: right;
 }
 #correspondance>tbody>tr>td, 
 #correspondance>tbody>tr>th, 
@@ -645,7 +647,7 @@ table.dataTable tbody tr {
     margin-top: -5px;
     margin-left: -5px;
 }
-.matching_of_entity , #add_type, #show_more, #hide_more, #send_type, #defaut_param, #demare, .add_type , .remove_type {
+.matching_of_entity , #add_type, #show_more, #hide_more, #send_type, #defaut_param, #demare, .add_type , .remove_type, .btn_authen {
     background: #022a3b;
     border: 0;
     color: #fff;
@@ -660,7 +662,8 @@ table.dataTable tbody tr {
 .matching_of_entity i {
     margin-right: 10px;
 }
-.matching_of_entity:hover, #add_type:hover,  #show_more:hover, #hide_more:hover, #demare:hover,  #send_type:hover, #defaut_param:hover , .add_type:hover {
+.matching_of_entity:hover, #add_type:hover,  #show_more:hover, #hide_more:hover, #demare:hover,  #send_type:hover, #defaut_param:hover , .add_type:hover,
+.btn_authen:hover{
      background: #1668b2;
 }
 .bouton_entity {
@@ -704,7 +707,6 @@ h2 {
     width: 20%;
     color: #1668b2;
     font-size: 15px;
-    font-weight: bold;
     margin: 10px 0;
 
 }
@@ -817,4 +819,77 @@ h2 {
 }
 .btn_pardefaut {
     text-align: center;
+}
+.contenu-login {
+    padding: 20px;
+    width: 40%;
+    background: #fff;
+    margin: 10% auto;
+    box-shadow: 3px 3px 10px, -3px -3px 10px;
+    border-radius:10px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+}
+
+.authentification {
+    color: #1668b2;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+.authentification i {
+    margin-right: 10px;
+}
+.login_form {
+    width: 60%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.login_form input[type='text'], .login_form input[type='password'] {
+    border-color: #1668b2;
+}
+.login_form .input-group-addon {
+    background: #022a3b;
+    border: 1px solid #022a3b;
+    color: #fff;
+
+}
+.login_form .input-group {
+    margin: 20px auto;
+}
+.login_in , .login_out{
+    position: fixed;
+    right: 0;
+    top: 100px;
+    z-index: 99999999;
+    background: #022a3b;
+    padding: 10px 20px;
+    border-radius: 10px 0 0 10px;
+    box-shadow: 1px 1px 10px #000;
+    color:#fff;
+
+}
+
+.contenu {
+    width: 90%;
+    margin: 50px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px, -3px -3px 10px;
+    padding-bottom: 20px;
+}
+
+h4 {
+    text-align: center;
+    color:  #022a3b;
+    text-decoration: underline;
+    text-transform: uppercase;
+    font-weight: bold;
+
+}
+.panel-title {
+    text-align: left;
+    text-decoration: none;
 }

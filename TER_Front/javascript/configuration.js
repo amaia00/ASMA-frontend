@@ -23,6 +23,11 @@ $(function ($) {
 });
 
 $('#config tbody').on('click', '.edit', function () {
+    var data  = {
+        name: $(this).parent().find('.name').text(),
+        value: $(this).parent().find('.valeur').val(),
+        description: $(this).parent().find('.description').text()
+    };
     var element_change = $(this).parent().attr('id').split('-');
     console.log($(this).parent().find('.valeur').val());
     var element_change_id = element_change[1];
@@ -31,11 +36,11 @@ $('#config tbody').on('click', '.edit', function () {
         type: 'PUT',
         dataType: 'json',
         url: 'http://localhost:8000/parameters/' + element_change_id,
-        data: {
-            "name": $(this).parent().find('.name').text(),
-            "value": $(this).parent().find('.valeur').val(),
-            "description": $(this).parent().find('.description').text()
+        headers: {
+            'Authorization':'Token '+localStorage.getItem('id_session'),
+            'Content-Type':'application/json'
         },
+        data: JSON.stringify(data),
         success: function (data) {
             toastr.options = {
                 "showDuration": "1000",
@@ -225,6 +230,10 @@ $(document).on('click','.remove_type',function () {
         type: 'DELETE',
         dataType: 'json',
         url: 'http://localhost:8000/parameters-score-pertinence/' + id,
+        headers: {
+            'Authorization':'Token '+localStorage.getItem('id_session'),
+            'Content-Type':'application/json'
+        },
         data: {
 
         },
@@ -253,10 +262,7 @@ $(document).on('click','.remove_type',function () {
 $(document).on('click', '.add_type', function () {
     var split_element = $(this).attr('id').split('-');
     var id = split_element[1];
-    console.log(id);
-
     var type_edit = $(this).parent().parent().find('.type_edit').val();
-    console.log(type_edit);
     var name_edit = $(this).parent().parent().find('.name_edit').val();
     var coordinate_edit = $(this).parent().parent().find('.coordinate_edit').val();
     var osmcle = $(this).parent().parent().find('.osmcle').val();
@@ -359,48 +365,59 @@ function correct_form(array1) {
     }
 }
 function sendrequest(id, type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn) {
+    var data = {
+        id: id,
+        name: "weight_matching",
+        weight_type: type_edit,
+        weight_name: name_edit,
+        weight_coordinates: coordinate_edit,
+        osm_key_type: osmcle,
+        osm_value_type: osmvaleur,
+        gn_feature_class: classgn,
+        gn_feature_code: codegn,
+        all_types: false,
+    }
     $.ajax({
         type: 'PUT',
         dataType: 'json',
         url: 'http://localhost:8000/parameters-score-pertinence/' + id,
-        data: {
-            "id": id,
-            "name": "weight_matching",
-            "weight_type": type_edit,
-            "weight_name": name_edit,
-            "weight_coordinates": coordinate_edit,
-            "osm_key_type": osmcle,
-            "osm_value_type": osmvaleur,
-            "gn_feature_class": classgn,
-            "gn_feature_code": codegn,
-            "all_types": false,
+        headers: {
+            'Authorization':'Token '+localStorage.getItem('id_session'),
+            'Content-Type':'application/json'
         },
+        data: JSON.stringify(data),
+
         success: function (data) {
                 toastr.success('Les données ont été modifiés  ! Merci');
 
         },
         error: function (request, status, error) {
+            console.log(request);
             toastr["error"]('Une erreur s\'est produite réessayer plus tard');
         }
     });
 }
 function sendpost( type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn) {
+    var data = {
+        name: "weight_matching",
+        weight_type: type_edit,
+        weight_name: name_edit,
+        weight_coordinates: coordinate_edit,
+        osm_key_type: osmcle.toLowerCase(),
+        osm_value_type: osmvaleur.toLowerCase(),
+        gn_feature_class: classgn.toUpperCase(),
+        gn_feature_code: codegn.toUpperCase(),
+        all_types: false,
+    }
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: 'http://localhost:8000/parameters-score-pertinence',
-        data: {
-            //"id": sendone,
-            "name": "weight_matching",
-            "weight_type": type_edit,
-            "weight_name": name_edit,
-            "weight_coordinates": coordinate_edit,
-            "osm_key_type": osmcle.toLowerCase(),
-            "osm_value_type": osmvaleur.toLowerCase(),
-            "gn_feature_class": classgn.toUpperCase(),
-            "gn_feature_code": codegn.toUpperCase(),
-            "all_types": false,
+        headers: {
+            'Authorization':'Token '+localStorage.getItem('id_session'),
+            'Content-Type':'application/json'
         },
+        url: 'http://localhost:8000/parameters-score-pertinence',
+        data: JSON.stringify(data),
         success: function (data) {
             toastr.success('Les données ont été modifiés  ! Merci');
             get_all_parameter();
@@ -423,22 +440,28 @@ function sendpost( type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, cla
     });
 }
 function sendonerequest(el1, el2, el3) {
+    var data =  {
+            id: sendone,
+            name: "weight_matching_global",
+            weight_type: el1,
+            weight_name: el2,
+            weight_coordinates: el3,
+            osm_key_type: null,
+            osm_value_type: null,
+            gn_feature_class: null,
+            gn_feature_code: null,
+            all_types: false,
+    }
     $.ajax({
         type: 'PUT',
         dataType: 'json',
-        url: 'http://localhost:8000/parameters-score-pertinence/' + sendone,
-        data: {
-            "id": sendone,
-            "name": "weight_matching_global",
-            "weight_type": el1,
-            "weight_name": el2,
-            "weight_coordinates": el3,
-            "osm_key_type": null,
-            "osm_value_type": null,
-            "gn_feature_class": null,
-            "gn_feature_code": null,
-            "all_types": false,
+        headers: {
+            'Authorization':'Token '+localStorage.getItem('id_session'),
+            'Content-Type':'application/json'
         },
+        url: 'http://localhost:8000/parameters-score-pertinence/' + sendone,
+        data : JSON.stringify(data),
+
         success: function (data) {
                 toastr.success('Les données ont été modifiés  ! Merci', {fadeAway: 100});
             $('.par_defaut').find('input[type="number"]').attr('disabled', 'disabled');

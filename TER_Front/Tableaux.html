@@ -8,7 +8,7 @@
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link rel="stylesheet" href="css/style.css">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
 		<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
@@ -23,7 +23,6 @@
 			 <span  style='vertical-align: text-top;' class="glyphicon glyphicon-search nav_menu_left nav_menu_left_search" aria-hidden="true"></span>
 			 <span  style='vertical-align: text-top;' class="nav_menu_left_search glyphicon glyphicon-remove closebtn form_close" aria-hidden="true"></span>
 				<ul id ="menu">
-					<li><a href="configuration.html">configuration</a></li>
 					<li><a>Importation des données </a></li>
 					<li><a>A propos </a></li>
 					<li><a> Contact </a></li>
@@ -41,12 +40,15 @@
 			</button>
 			<img src="images/img_localisation.png" width="290"/>
 		</form>
+		<div class="login_in"><a href="login.html"><i class="fa fa-sign-in" aria-hidden="true"></i> Se connecter</a> </div>
+		<div class="login_out"><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>Se déconnecter</a> </div>
 		<div id="content">
-			<div class="container">
-
+			<div class="contenu">
+				<div class="container">
 				<button type="button" data-toggle="modal" data-target="#myModal1" class="btn down_btn btn-default btn-search">Télécharger 
 					<i class="fa fa-download" aria-hidden="true"></i>
-  				</button>	
+  				</button>
+					<h4>Tableau de correspondance des entités</h4>
 				<table id="correspondance" class="table  taille tableaux">
 					
 					<thead>
@@ -66,6 +68,7 @@
 				</table>
 				
 			</div>
+		</div>
 		</div>
 		<footer>
 			<p>
@@ -244,7 +247,6 @@
         <script type="text/javascript" src="javascript/osmtogeojson.js"></script>
 		<script src="javascript/maps_correspondance.js"></script>
         <script src="javascript/script_js.js"></script>
-		<script src="javascript/jquery.spin.js"></script>
         <script type="text/javascript" src="DataTables/datatables.min.js"></script>
 		<script scr="//cdn.datatables.net/plug-ins/1.10.15/api/fnReloadAjax.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

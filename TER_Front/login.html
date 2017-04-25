@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="fr" class="accueil">
+<head>
+    <title>Application TER - Login</title>
+    <!-- To ensure proper rendering and touch zooming,-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <!-- Utilisation de bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<!-- Utilisation d'un fichier CSS -->
+<link rel="stylesheet" href="css/style.css">
+<!-- font awesome CSS -->
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<!-- Utilisation d'un font family -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <a href="index.html">Nom de l'application
+            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>	</a>
+        <span  style='vertical-align: text-top;' class="glyphicon glyphicon-search nav_menu_left nav_menu_left_search" aria-hidden="true"></span>
+        <span  style='vertical-align: text-top;' class="nav_menu_left_search glyphicon glyphicon-remove closebtn form_close" aria-hidden="true"></span>
+        <ul id ="menu">
+            <!--<li><a href="configuration.html">Configuration</a></li>-->
+            <li><a>Importation des données </a></li>
+            <li><a>A propos </a></li>
+            <li><a>Contact </a></li>
+        </ul>
+    </div>
+</header>
+<form class="search">
+    <div class="form-group">
+        <label for="Rechercher">Rechercher </label>
+        Nom :
+        <input type="text" class="form-control" id="input_search" placeholder="Entrer le nom d'une place">
+    </div>
+    <button type="submit" class="btn btn-default btn-search" id="btn_search">Rechercher <span  style='vertical-align: text-top;' class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+    </button>
+    <div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>Entrer un nom valide
+    </div>
+    <img src="images/img_localisation.png" width="290"/>
+    <div class="resultats">
+        <label for="Rechercher">Résultats de recherhe </label>
+        <ul>
+        </ul>
+    </div>
+</form>
+
+<div id="content"  style="padding:0">
+    <div class="contenu-login">
+        <div class="authentification"><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>Login utilisateur</div>
+        <form class="login_form">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></div>
+                <input type="text" class="form-control" id="login" placeholder="Username">
+            </div>
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></div>
+                <input type="password" class="form-control" id="pass_login" placeholder="Password">
+            </div>
+
+            <button type="submit" class="btn btn_authen">s'authentifier</button>
+         </form>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="javascript/script_js.js"></script>
+<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="javascript/login.js"></script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+montrer_data();
 $(document).ready(function(){
    $(".carte a").click(function()  {
 
@@ -54,3 +55,31 @@ $(".form_close").click(function() {
 
 
  });
+
+$('.login_out').on('click', function () {
+   localStorage.clear();
+    $('#menu li').first().remove();
+    montrer_data();
+    var current_url = window.location.href.split('/');
+    var len = current_url.length - 1;
+   //var config_link = current_url;​​​
+if(current_url[len] == 'configuration.html') {
+    document.location.href="login.html";
+}
+
+});
+function montrer_data() {
+
+    var id_session_user = localStorage.getItem('id_session');
+    console.log(id_session_user);
+    if(id_session_user != null) {
+        $('#menu').prepend('<li><a href="configuration.html">Configuration</a></li>');
+        $('.login_in').hide;
+        $('.login_out').show();
+    }
+    else {
+        $('.login_out').hide();
+        $('.login_in').show();
+    }
+
+}

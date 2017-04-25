@@ -8,7 +8,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
@@ -25,7 +25,6 @@
         <span  style='vertical-align: text-top;' class="nav_menu_left_search glyphicon glyphicon-remove closebtn form_close" aria-hidden="true"></span>
         <ul id ="menu">
             <li><a>A propos </a></li>
-            <li><a class="active" href="configuration.html">Configuration </a></li>
             <li><a> Contact </a></li>
 
         </ul>
@@ -42,8 +41,11 @@
     </button>
     <img src="images/img_localisation.png" width="290" class="config_image"/>
 </form>
+<div class="login_in"><a href="login.html"><i class="fa fa-sign-in" aria-hidden="true"></i> Se connecter</a> </div>
+<div class="login_out"><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>Se déconnecter</a> </div>
 <div id="content">
     <div class="container">
+        <div class="contenu" style="padding: 20px 0;">
 
         <h6>Vous pouvez changer les coefficients des attributs de décisons permettant de calculer le score de pertinance .<br/>
             La valeur de chaque coefficient dans les paramètres du score de pertinence doit être borné entre 0 et 1.</h6>
@@ -153,7 +155,7 @@
             </div>
 
         </div>
-        <img src="images/config.png" width="200"  class="config_image"/>
+    </div>
     </div>
 </div>
 <div id="patientez" class="modal fade" style="display: none;" aria-hidden="true">
