@@ -8,7 +8,6 @@ $('.btn_authen').on('click', function (e) {
     e.preventDefault();
     password = $('#pass_login').val();
     login = $('#login').val();
-    console.log(password);
     if (password != '' && login != '') {
         authentification();
     }

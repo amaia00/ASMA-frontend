@@ -185,7 +185,8 @@ h2, h4, h5 {
     border: 0;
     box-shadow: 0 0 0;
     border-bottom: 2px solid #1668b2;
-    color: #022a3b
+    color: #022a3b;
+    margin-top: 15px;
 }
 .pal {
     padding-left: 10px;
@@ -590,6 +591,7 @@ table.dataTable tbody tr {
     color: #000;
     margin-top: 10px;
     font-style: italic;
+    text-decoration: underline;
 }
 .content_map  #entity_geoname h2 span, .content_map  #entity_geoname h2 {
     color:#e85e03;
@@ -703,7 +705,7 @@ h2 {
     margin: 10px 0;
     margin-right: 15px;
 }
-.name_parametre label , .name_parametre_specific label, .all_element_config label, .name_parametre_specific_autre label {
+.name_parametre label , .name_parametre_specific label, .all_element_config label, .name_parametre_specific_autre label, .importation label {
     width: 20%;
     color: #1668b2;
     font-size: 15px;
@@ -885,11 +887,88 @@ h4 {
     text-align: center;
     color:  #022a3b;
     text-decoration: underline;
-    text-transform: uppercase;
     font-weight: bold;
 
 }
 .panel-title {
     text-align: left;
     text-decoration: none;
+}
+fieldset {
+    padding: 30px;
+    margin: 0 2px;
+    border: 2px solid #1668b2;
+}
+legend {
+    width:inherit;
+    border-bottom: 0;
+    margin-bottom: 0;
+}
+.importation_all {
+    display: inline-block;
+    width: 49%;
+    vertical-align: top;
+
+}
+.importation .input-group {
+    width: 100%;
+    margin: 30px auto ;
+}
+.importation .input-group input {
+    width: 70%;
+    float: none;
+    display: inline-block;
+
+}
+.importation .input-group label {
+    width: 27%;
+
+}
+#import_table {
+    display: none;
+    float: none;
+}
+
+#import_table tbody, #import_table thead {
+    border: 2px solid #1668b2;
+}
+
+#import_table {
+    width: 80% !important;
+    margin: 30px auto;
+}
+
+#import_table>thead>tr>th {
+    border-bottom:2px solid #1668b2 ;
+}
+.blockPage {
+    background: transparent !important;
+    border: 0 !important;
+}
+
+.informations select.form-control {
+    border: 2px solid #1668b2;
+}
+
+table.dataTable tbody tr.invalider_entity {
+    background-color: rgba(255,12,12, 0.3) !important;
+}
+table.dataTable tbody tr.valider_entity {
+    background-color: rgba(92,184,92, 0.3) !important;
+}
+#nameg3, #nameg4, #nameg1 , #nameo1, #nameo3, #nameo4 {
+    margin-top: 0;
+}
+#content_modal_map {
+    background: #fff;
+}
+#pertinence {
+    clear: both;
+    border: 0;
+    box-shadow: inset 0 0 1em #1668b2, 0 0 3px #000;
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 20px;
+    text-align: center;
+    color:#1668b2;
 }

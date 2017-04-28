@@ -7,6 +7,18 @@ var marker = {}; // listes des marker
 var attribut_gn = '0';
 var featureGroup = new L.featureGroup(); // pour faire le resize
 var $_GET = {};
+var message_show = '<div id="patientez"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">' +
+    '<h2 class="modal-title">Patientez</h2></div> <div class="modal-body"><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>' +
+    '<span class="sr-only">Loading...</span> </div></div></div> </div>';
+
+/*$(document).ajaxStart($.blockUI({message: '' +
+'<div id="patientez"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">' +
+    '<h2 class="modal-title">Patientez</h2></div> <div class="modal-body"><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>' +
+'<span class="sr-only">Loading...</span> </div></div></div> </div>'})).ajaxStop($.unblockUI({message: '' +
+'<div id="patientez"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">' +
+'<h2 class="modal-title">Patientez</h2></div> <div class="modal-body"><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>' +
+'<span class="sr-only">Loading...</span> </div></div></div> </div>'}));*/
+
 
 // Recherche de l'entité dans l'api de geoname
 
@@ -71,10 +83,10 @@ function geocode(options) {
         success: success_function,
         error: error_function,
         beforeSend: function() {
-            $('#patientez').modal("show");
+            $.blockUI({message: message_show})
         },
         complete: function() {
-            $('#patientez').modal("hide");
+            $.unblockUI({message: message_show});
         },
 
     })
@@ -164,42 +176,16 @@ function geocodeReverse(lat, lng) {
             }
         },
         beforeSend: function() {
-            $('#patientez').modal("show");
+            $.blockUI({message: message_show});
         },
         complete: function() {
-            $('#patientez').modal("hide");
-        }
+            $.unblockUI({message: message_show});
+        },
     })
 }
 /// verification formulaire
 
-$("#btn_search").click(function(e) {
-    e.preventDefault();
-    if ($("#input_search").val() == " ") {
-        $(".search .alert").css('display', 'block');
-        $(".search .resultats ul").html(" ");
-        $(".resultats label").css("display", "none");
-        $(".search img").css("display", "block");
-    } else {
-        $(".search .alert").css("display", "none");
-        $(".search img").css("display", "none");
-        $(".resultats label").css("display", "block");
-        featureGroup.clearLayers();
-        $(".search .resultats ul").html(" ");
 
-        /* Recuperation des nom a chercher */
-        var search_name = $("#input_search").val();
-        geocode({
-            q: search_name
-        });
-
-        /* Recuperer le nombre de correspondance dans GN */
-
-        $("#input_search").val(" ");
-
-    }
-
-});
 
 // Manipulation des resultats
 $(".resultats").on('mouseenter', '.item_gn', function() {
@@ -236,7 +222,6 @@ function onMapClick(e) {
     mymap.setView(e.latlng, e.target._zoom);
 }
 mymap.on('click', onMapClick);
-//marker.on('click', onMapClick);
 
 
 function clickmarker(e) {
@@ -274,17 +259,46 @@ $("#content").on('click', '.entite_link', function(event) {
                 var width_window = $(window).width() - 320 + 'px';
                 affichage_erreur();
                 featureGroup.clearLayers();
-                $('.search .resultats .alert').html('Nous n\'avons pas encore importer cette entité , vous pouvez télécharger le dump et l\'importer ! essayer une autre ');
+                $('.search .resultats .alert').html('Nous n\'avons pas encore importer cette entité , ' +
+                    'vous pouvez télécharger le dump et l\'importer ! essayer une autre <a href="#">Importation</a> ');
                 return false;
             }
 
         },
         beforeSend: function() {
-            $('#patientez').modal("show");
+            $.blockUI({message: message_show});
         },
         complete: function() {
-            $('#patientez').modal("hide");
-        }
+            $.unblockUI({message: message_show});
+        },
     })
 
-})
+});
+
+$("#btn_search").click(function(e) {
+    e.preventDefault();
+    if ($("#input_search").val() == " ") {
+        $(".search .alert").css('display', 'block');
+        $(".search .resultats ul").html(" ");
+        $(".resultats label").css("display", "none");
+        $(".search img").css("display", "block");
+    } else {
+        $(".search .alert").css("display", "none");
+        $(".search img").css("display", "none");
+        $(".resultats label").css("display", "block");
+        // featureGroup.clearLayers();
+        $(".search .resultats ul").html(" ");
+
+        /* Recuperation des nom a chercher */
+        var search_name = $("#input_search").val();
+        geocode({
+            q: search_name
+        });
+
+        /* Recuperer le nombre de correspondance dans GN */
+
+        $("#input_search").val(" ");
+
+    }
+
+});
