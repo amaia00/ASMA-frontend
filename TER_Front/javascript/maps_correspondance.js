@@ -346,7 +346,6 @@ function overpasse(data) {
         url: 'http://overpass-api.de/api/interpreter?data=' + data,
 
         success: function (data) {
-
             var osmGeoJSON = osmtogeojson(data);
             var marker;
             if (osmGeoJSON.features.length > 0) {
