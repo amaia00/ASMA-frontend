@@ -564,16 +564,16 @@ h6 {
 #config tbody tr td:first-child {
 	text-align: left;
 }
-#patientez .modal-title {
+.patientez .modal-title {
 	background: #1668b2;
 	color:#fff;
 	padding: 20px 0;
 	text-align: center;
 }
-#patientez .modal-header {
+.patientez .modal-header {
 	padding: 0;
 }
-#patientez .modal-body {
+.patientez .modal-body {
 	text-align: center;
 	margin: 20px 0;
 }
@@ -603,7 +603,7 @@ table.dataTable tbody tr {
 
 .quart {
     width: 23%;
-    float: left;
+    display: inline-block;
     margin: 1%;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -957,7 +957,7 @@ table.dataTable tbody tr.valider_entity {
     background-color: rgba(92,184,92, 0.3) !important;
 }
 #nameg3, #nameg4, #nameg1 , #nameo1, #nameo3, #nameo4 {
-    margin-top: 0;
+    margin-top: 10px;
 }
 #content_modal_map {
     background: #fff;
@@ -971,4 +971,39 @@ table.dataTable tbody tr.valider_entity {
     font-size: 20px;
     text-align: center;
     color:#1668b2;
+}
+.matching {
+    box-shadow: 0 0 0;
+}
+.sous_similarity {
+    text-align: center;
+}
+
+#pertinence .progress {
+    width:80%;
+    display: inline-block;
+    vertical-align: top;
+}
+#pertinence span {
+    display: block;
+}
+#pertinence .score {
+width: 18%;
+    display: inline-block;
+}
+.load {
+    height: 100% !important;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,0.5);
+    z-index: 9999;
+    display: none;
+
+}
+.contenu .container {
+    width: 100%;
 }

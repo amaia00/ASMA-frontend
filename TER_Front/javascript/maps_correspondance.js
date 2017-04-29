@@ -56,14 +56,9 @@ function callback(data_info) {
 
     }
     else if(data_info.name == 'limit_color_score_coordinates') {
-        value_color_score_pertinence =data_info.value;
+        value_color_score_pertinence = data_info.value;
 
     }
-
-   /* console.log(value_color_type+"Type");
-    console.log(value_color_coordinates+"coordinates");
-    console.log(value_color_name+"name");
-    console.log(value_color_score_pertinence+"score");*/
 
 
 }
@@ -247,19 +242,29 @@ $(document).on('shown.bs.modal', '#myModal ', function () {
         $("#valider2").on('click', function () {
             var id_osm = $(this).parent().parent().find("input").attr("id");
             var valeur_osm = $("#" + id_osm).val();
-            if (valeur_osm != "-") {
-                var split_variable = valeur_osm.split("-");
-                var key_osm = split_variable[0];
-                var value_osm = split_variable[1];
-                var code_gn = $("#g2fcode").val();
-                var class_gn = $("#g2fclass").val();
-                var data = {
+            var key_osm;
+            var value_osm;
+            var code_gn = $("#g2fcode").val();
+            var class_gn = $("#g2fclass").val();
+            var data;
+            if(valeur_osm == ' ') {
+                var split_variable_tags = $(this).parent().parent().find("select").val().split('=');
+                key_osm = split_variable_tags[0];
+                value_osm = split_variable_tags[1];
+
+            }
+           else if (valeur_osm != ' ') {
+                var split_variable = valeur_osm.split("=");
+                key_osm = split_variable[0];
+                value_osm = split_variable[1];
+            }
+                data = {
                     'gn_feature_class': class_gn,
                     'gn_feature_code': code_gn,
                     'osm_key': key_osm,
                     'osm_value': value_osm,
                     'description': " test"
-                }
+                },
                 $.ajax({
                     url: 'http://localhost:8000/correspondence-types-close',
                     type: 'POST',
@@ -269,9 +274,9 @@ $(document).on('shown.bs.modal', '#myModal ', function () {
 
                     success: function (data) {
                         toastr.options = {
-                            "showDuration": "500",
+                            "showDuration": "2000",
                             "hideDuration": "1000",
-                            "timeOut": "500",
+                            "timeOut": "2000",
                             "extendedTimeOut": "0"
                         },
                             toastr["success"]('La correspondance a été enregistré ! Merci');
@@ -292,7 +297,7 @@ $(document).on('shown.bs.modal', '#myModal ', function () {
                     }
 
                 });
-            }
+
         });
     $(document).on('click', "#validerCorrespondance", function (event) {
         event.preventDefault();
@@ -333,43 +338,58 @@ var BlackIcon = L.icon({
     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 function overpasse(data) {
+    featureGroup.clearLayers();
     var style_map = {
         "color": "#772184",
         "weight": 4,
         "opacity": 0.5,
         "background": "#772184"
     };
-    $.post('http://overpass-api.de/api/interpreter', {
-        data
-    }).done(function (data) {
-        var osmGeoJSON = osmtogeojson(data);
-        var marker;
-        if (osmGeoJSON.features.length > 0) {
-            var convert_json = JSON.stringify(osmGeoJSON);
-            var json_object = JSON.parse(convert_json);
-            var planningAppsLayer = L.geoJSON(json_object, {
-                pointToLayer: function (feature, latlng) {
-                    return L.marker(latlng, {icon: markerhide, myCustomId: "hide"});
-                },
-                style: function (feature) {
-                    return {color: "#772184", weight: 4, "opacity": 0.5, background: "#772184"};
-                }
-            }).addTo(featureGroup);
+    $.ajax({
+        url: 'http://overpass-api.de/api/interpreter?data=' + data,
 
-            mymap.fitBounds(featureGroup.getBounds());
+        success: function (data) {
+
+            var osmGeoJSON = osmtogeojson(data);
+            var marker;
+            if (osmGeoJSON.features.length > 0) {
+                var convert_json = JSON.stringify(osmGeoJSON);
+                var json_object = JSON.parse(convert_json);
+                var planningAppsLayer = L.geoJSON(json_object, {
+                    pointToLayer: function (feature, latlng) {
+                        return L.marker(latlng, {icon: markerhide, myCustomId: "hide"});
+                    },
+                    style: function (feature) {
+                        return {color: "#772184", weight: 4, "opacity": 0.5, background: "#772184"};
+                    }
+                }).addTo(featureGroup);
+
+                mymap.fitBounds(featureGroup.getBounds());
+            }
+        },
+        error: function () {
+            console.log(error);
+        },
+        beforeSend : function () {
+            $('.load').css('display','block')
+
+        },
+        complete : function() {
+            $('.load').fadeOut(1000);
+
         }
-    }).fail(function (error) {
-        console.log(error);
     });
 }
 function add_to_map(idgn, idosm) {
+
     $(".count_slider").html("");
     featureGroup.clearLayers();
     for (var i = 0; i < information_data.length; i++) {
         $(".count_slider").append('<div class=" bouton_entity bouton_count' + i + '">' + (i + 1) + '</div>');
         if (information_data[i].reference_gn == idgn && information_data[i].reference_osm == idosm) {
+            console.log(information_data);
             $(".bouton_count" + i).addClass('active');
-            if (information_data[i].name_matching < value_color_name) {
+            if (information_data[i].similarity_name < value_color_name) {
                 $("#nameg3").css('border-bottom', '2px solid #ac2925');
                 $("#nameo3").css('border-bottom', '2px solid #ac2925');
                 $("#nameg3").css('color', '#ac2925');
@@ -386,8 +406,7 @@ function add_to_map(idgn, idosm) {
                 $(".informations .form-control").css('color', '#1668b2');
                 $("#distance .score").css('color', '#5cb85c');
             }
-            console.log(value_color_coordinates);
-            if (information_data[i].coordinates_matching < value_color_coordinates) {
+            if (information_data[i].similarity_coordinates < value_color_coordinates) {
                 $("#nameg1").css('border-bottom', '2px solid #ac2925');
                 $("#nameo1").css('border-bottom', '2px solid #ac2925');
                 $("#nameg1").css('color', '#ac2925');
@@ -404,7 +423,7 @@ function add_to_map(idgn, idosm) {
                 $(".informations .form-control").css('color', '#1668b2');
                 $("#coordinate .score").css('color', '#5cb85c');
             }
-            if (information_data[i].type_matching < value_color_type) {
+            if (information_data[i].similarity_type < value_color_type) {
                 $("#nameg2").css('border-bottom', '2px solid #ac2925');
                 $("#nameo2").css('border-bottom', '2px solid #ac2925');
                 $("#nameg2").css('color', '#ac2925');
@@ -453,19 +472,19 @@ function add_to_map(idgn, idosm) {
             $("#entity_osm #nameo4").val(information_data[i].osm_shape.toLowerCase());
             $("#g2fcode").val(information_data[i].gn_feature_code);
             $("#g2fclass").val(information_data[i].gn_feature_class);
-            $("#pertinence .score").html(Math.round(information_data[i].pertinence_score * 100, 1) + "%");
+            $("#pertinence .score").html(parseFloat((information_data[i].pertinence_score) * 100).toFixed(2) + "%");
             $("#pertinence .progress-bar ").attr("aria-valuenow", Math.round(information_data[i].pertinence_score * 100));
             $("#pertinence .progress-bar ").css("width", Math.round(information_data[i].pertinence_score * 100) + "%");
-            $("#type .score").html(Math.round(information_data[i].type_matching * 100, 1) + "%");
-            $("#type .progress-bar ").attr("aria-valuenow", Math.round(information_data[i].type_matching * 100));
-            $("#type .progress-bar ").css("width", Math.round(information_data[i].type_matching * 100) + "%");
-            $("#distance .score").html(Math.round(information_data[i].name_matching * 100) + "%");
-            $("#distance .progress-bar ").attr("aria-valuenow", Math.round(information_data[i].name_matching * 100));
-            $("#distance .progress-bar ").css("width", Math.round(information_data[i].name_matching * 100) + "%");
-            $("#coordinate .score").html(Math.round(information_data[i].coordinates_matching * 100) + "%");
-            $("#coordinate .progress-bar ").attr("aria-valuenow", Math.round(information_data[i].coordinates_matching * 100, 2));
-            $("#coordinate .progress-bar ").css("width", Math.round(information_data[i].coordinates_matching * 100, 2) + "%");
-            var data = information_data[i].osm_shape.toLowerCase() + "(" + information_data[i].reference_osm + "); (._; > ;);out;";
+            $("#type .score").html(parseFloat((information_data[i].similarity_type * 100).toFixed(2)) + "%");
+            $("#type .progress-bar ").attr("aria-valuenow", Math.round(information_data[i].similarity_type * 100));
+            $("#type .progress-bar ").css("width", Math.round(information_data[i].similarity_type * 100) + "%");
+            $("#distance .score").html(parseFloat(information_data[i].similarity_name * 100).toFixed(2) + "%");
+            $("#distance .progress-bar ").attr("aria-valuenow", Math.round(information_data[i].similarity_name * 100));
+            $("#distance .progress-bar ").css("width", Math.round(information_data[i].similarity_name * 100) + "%");
+            $("#coordinate .score").html(parseFloat((information_data[i].similarity_coordinates * 100).toFixed(2)) + "%");
+            $("#coordinate .progress-bar ").attr("aria-valuenow", Math.round(information_data[i].similarity_coordinates * 100, 2));
+            $("#coordinate .progress-bar ").css("width", Math.round(information_data[i].similarty_coordinates * 100, 2) + "%");
+            var data = information_data[i].osm_shape.toLowerCase()+"("+information_data[i].reference_osm+");(._;>;);out;";
             overpasse(data);
             console.log(information_data[i].validation);
             marker[information_data[i].reference_gn] = L.marker([information_data[i].gn_latitude, information_data[i].gn_longitude], {icon: greenIcon}, {myCustomId: information_data[i].reference_gn}).addTo(featureGroup).on('click', click_marker);
@@ -487,6 +506,7 @@ function add_to_map(idgn, idosm) {
         }
 
     }
+
 
 }
 
@@ -562,7 +582,6 @@ function array_information(gn) {
             $('#patientez').modal("show");
         },
         complete: function () {
-
             $("#patientez").removeClass('in');
             $("#patientez").css('display', 'none');
             $(".modal-backdrop.in").remove();
