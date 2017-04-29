@@ -42,7 +42,6 @@ function color_limit(url) {
     });
 }
 function callback(data_info) {
-    console.log(data_info.name);
     if(data_info.name == 'limit_color_name') {
         value_color_name =data_info.value;
     }
@@ -52,7 +51,7 @@ function callback(data_info) {
     }
     else if(data_info.name == 'limit_color_coordinates') {
         value_color_coordinates =data_info.value;
-        console.log(value_color_coordinates);
+
 
     }
     else if(data_info.name == 'limit_color_score_coordinates') {
@@ -90,7 +89,6 @@ function valider_invalider_sans_detail(url, reference_gn, reference_osm, etats) 
                         elements_selected.find('.invalide').removeClass('invalide');
                         elements_selected.removeClass('valider_entity');
                         elements_selected.addClass('invalider_entity');
-                        information_data[elemnt_delete].validation = 2;
                         toastr.success('Les entités ont été invalidé  ! Merci', {fadeAway: 100});
                     }
                     else {
@@ -140,7 +138,7 @@ function valider_invalider(url, reference_gn, reference_osm, etats) {
                         elements_selected.find('.invalide').removeClass('invalide');
                         elements_selected.removeClass('invalider_entity');
                         elements_selected.addClass('valider_entity');
-                        $('.matching').css('display','none');
+                        information_data[elemnt_delete].validation = 1;
                         toastr.success('Les entités ont été validé  ! Merci', {fadeAway: 100});
                     }
                     else if (etats == 'invalider') {
@@ -148,7 +146,7 @@ function valider_invalider(url, reference_gn, reference_osm, etats) {
                         elements_selected.find('.invalide').removeClass('invalide');
                         elements_selected.removeClass('valider_entity');
                         elements_selected.addClass('invalider_entity');
-                        $('.matching').css('display','none');
+                        information_data[elemnt_delete].validation = 2;
                         toastr.success('Les entités ont été invalidé  ! Merci', {fadeAway: 100});
                     }
                     if (id_next == undefined) {
@@ -338,7 +336,6 @@ var BlackIcon = L.icon({
     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 function overpasse(data) {
-    featureGroup.clearLayers();
     var style_map = {
         "color": "#772184",
         "weight": 4,
@@ -387,8 +384,13 @@ function add_to_map(idgn, idosm) {
     for (var i = 0; i < information_data.length; i++) {
         $(".count_slider").append('<div class=" bouton_entity bouton_count' + i + '">' + (i + 1) + '</div>');
         if (information_data[i].reference_gn == idgn && information_data[i].reference_osm == idosm) {
-            console.log(information_data);
             $(".bouton_count" + i).addClass('active');
+            if(information_data[i].validation == 1 || information_data[i].validation == 2)  {
+                $('.matching').css('display','none');
+            }
+            else if(information_data[i].validation == 0) {
+                $('.matching').css('display','block');
+            }
             if (information_data[i].similarity_name < value_color_name) {
                 $("#nameg3").css('border-bottom', '2px solid #ac2925');
                 $("#nameo3").css('border-bottom', '2px solid #ac2925');
@@ -489,12 +491,7 @@ function add_to_map(idgn, idosm) {
             console.log(information_data[i].validation);
             marker[information_data[i].reference_gn] = L.marker([information_data[i].gn_latitude, information_data[i].gn_longitude], {icon: greenIcon}, {myCustomId: information_data[i].reference_gn}).addTo(featureGroup).on('click', click_marker);
             marker[information_data[i].reference_osm] = L.marker([information_data[i].osm_latitude, information_data[i].osm_longitude], {icon: rougeIcon}, {myCustomId: information_data[i].reference_osm}).addTo(featureGroup).on('click', click_marker);
-            if (information_data[i].validation == 1 || information_data[i].validation == 2 ) {
-                $('.matching').css('display','none');
-            }
-            else if(information_data[i].validation == 0) {
-                $('.matching').css('display','block');
-            }
+
                 }
         else {
 
@@ -641,10 +638,8 @@ function click_marker(e) {
         console.log(this.options.myCustomId);
         if (information_data[i].reference_osm === this.options.myCustomId) {
             add_to_map(idgn, this.options.myCustomId);
-            console.log("hello1");
         }
         else if (information_data[i].reference_gn === this.options.myCustomId) {
-            console.log("hello2");
             return false;
         }
         else {
