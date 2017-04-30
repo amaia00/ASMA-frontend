@@ -2,15 +2,22 @@
  * Created by FADDI SOFIAA on 23/04/2017.
  */
 var parametre_data = [];
-var compare_valeur1 = [];
 var data_value = [];
 var sendone = 0;
 $(document).ajaxStart($.blockUI({message: '<h1><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i><br/> Patientez un instant...</h1>'})).ajaxStop($.unblockUI);
-
 var boolsend = false;
 var reinitialise = false;
+var height_chart = 250;
+var width_chart = $(window).width()- $(window).width()*0.3;
+
+$(document).on('click','#historique', function (e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    history('weight_matching_global', 'Historique des indices de similarités par défaut',e);
+    return false;
 
 
+});
 $('#accordion').collapse({
     toggle: true
 });
@@ -62,7 +69,7 @@ $('#config tbody').on('click', '.edit', function () {
         }
     });
 });
-
+getfeature_code();
 get_all_parameter();
 
     $.ajax({
@@ -145,7 +152,8 @@ function get_all_parameter() {
                         'max="1" class="form-control valeur_input" disabled>' +
                         '<a><i class="fa fa-pencil" aria-hidden="true"></i></a></div></li>');
                     $('.btn_pardefaut').append('<button type="button" title="Add new specific type" class="add_type" id="send_type-'+  + data.results[i].id+'"> ' +
-                        '<i class="fa fa-floppy-o" aria-hidden="true"></i> Enregistrer</button> <br/> <br/>');
+                        '<i class="fa fa-floppy-o" aria-hidden="true"></i> Enregistrer</button> <button type="button" title="Add new specific type"  data-target="#history"  id="historique"> ' +
+                        '<i class="fa fa-history" aria-hidden="true"></i></i>Historique</button> <br/> <br/>');
 
 
                     data_value.push(data.results[i].weight_type);
@@ -165,10 +173,7 @@ function get_all_parameter() {
                         'max="1" class="form-control valeur_input" disabled></li><li><input class="coordinate_edit form-control" value="' + data.results[i].weight_coordinates + '"type="number"min="0" step="0.1" ' +
                         'max="1" class="form-control valeur_input" disabled>' +
                         '<a><i class="fa fa-pencil" aria-hidden="true"></i></a></div></li></ul></div>');
-                    $(".autres").append('<div class="each_element-' + data.results[i].id + ' parametre_type_specific"> <div class="osm_type"><div class="sous_cat"> <label>Clé OpenStreetMap</label> ' +
-                        '<input id="cle_osm-' + data.results[i].id + '" type="text" class="form-control osmcle" value="' + data.results[i].osm_key_type + '" placeholder="Par exemple amenity"/> </div> <div class="sous_cat"> ' +
-                        '<label>Valeur OpenStreetMap</label> <input id="valeur_osm-' + data.results[i].id + '" type="text"  value="' + data.results[i].osm_value_type + '" class="osmvaleur form-control" placeholder="Par exemple restaurant"/> </div> </div> ' +
-                        '<div class="geoname_type"> <div class="sous_cat"> <label>Classe Geoname</label> <input maxlength="1" id="class_gn-' + data.results[i].id + '" type="text" class=" classgn form-control" value="' + data.results[i].gn_feature_class + '" placeholder="Par exemple S "/> ' +
+                    $(".autres").append('<div class="each_element-' + data.results[i].id + ' parametre_type_specific"><div class="geoname_type"> <div class="sous_cat"> <label>Classe Geoname</label> <input maxlength="1" id="class_gn-' + data.results[i].id + '" type="text" class=" classgn form-control" value="' + data.results[i].gn_feature_class + '" placeholder="Par exemple S "/> ' +
                         '</div> <div class="sous_cat"> <label>code Geoname</label> <input class="codegn" id="code_gn-' + data.results[i].id + '" value="' + data.results[i].gn_feature_code + '" type="text" class="form-control codegn" placeholder="Par exemple rest "/> ' +
                         '</div> </div></div><br/>');
                     $(".autres").append('<div class="each_element-' + data.results[i].id + '" style="text-align: center;"><br/><br/><button type="button" title="Add new specific type" ' +
@@ -321,12 +326,12 @@ $(document).on('click', '.add_type', function () {
                 sendpost(type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn);
             }
             else if(id==sendone && boolsend == true) {
-                console.log('sendone');
-                sendonerequest(type_edit, name_edit, coordinate_edit)
+                sendonerequest(type_edit, name_edit, coordinate_edit);
+                height_chart+= 60;
             }
             if (id != 'defaut' && id !=sendone  && boolsend == true) {
                 console.log('pardefaullt');
-                sendrequest(id, type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn);
+                sendrequest( type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn);
             }
         }
         }
@@ -364,9 +369,8 @@ function correct_form(array1) {
         return false;
     }
 }
-function sendrequest(id, type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn) {
+function sendrequest( type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn) {
     var data = {
-        id: id,
         name: "weight_matching",
         weight_type: type_edit,
         weight_name: name_edit,
@@ -378,9 +382,9 @@ function sendrequest(id, type_edit, name_edit, coordinate_edit, osmcle, osmvaleu
         all_types: false,
     }
     $.ajax({
-        type: 'PUT',
+        type: 'POST',
         dataType: 'json',
-        url: 'http://localhost:8000/parameters-score-pertinence/' + id,
+        url: 'http://localhost:8000/parameters-score-pertinence/',
         headers: {
             'Authorization':'Token '+localStorage.getItem('id_session'),
             'Content-Type':'application/json'
@@ -441,7 +445,6 @@ function sendpost( type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, cla
 }
 function sendonerequest(el1, el2, el3) {
     var data =  {
-            id: sendone,
             name: "weight_matching_global",
             weight_type: el1,
             weight_name: el2,
@@ -453,13 +456,13 @@ function sendonerequest(el1, el2, el3) {
             all_types: false,
     }
     $.ajax({
-        type: 'PUT',
+        type: 'POST',
         dataType: 'json',
         headers: {
             'Authorization':'Token '+localStorage.getItem('id_session'),
             'Content-Type':'application/json'
         },
-        url: 'http://localhost:8000/parameters-score-pertinence/' + sendone,
+        url: 'http://localhost:8000/parameters-score-pertinence',
         data : JSON.stringify(data),
 
         success: function (data) {
@@ -474,4 +477,215 @@ function sendonerequest(el1, el2, el3) {
 
         }
     });
+}
+
+function history(id, texte,e) {
+    $.ajax({
+        type: 'GET',
+        headers: {
+            'Authorization':'Token '+localStorage.getItem('id_session'),
+            'Content-Type':'application/json'
+        },
+        url: 'http://127.0.0.1:8000/parameters-score-pertinence-history',
+
+
+        success: function (data) {
+            callback_hight(data, texte,e);
+
+        },
+
+        error: function (request, status, error) {
+            toastr["error"]('Une erreur s\'est produite réessayer plus tard', {fadeAway: 100});
+
+
+        }
+    });
+
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+
+function callback_hight(data,texte,e) {
+
+
+    var date = [];
+    var similarity_name = [];
+    var similarity_coordinates = [];
+    var similarity_type = [];
+    for(var i =0; i<data.results.length;i++) {
+        res =  data.results[i].date;
+       date_tow = res.split(' ');
+       date_only = date_tow[0];
+
+        date.push(date_only);
+        similarity_name.push(parseFloat(data.results[i].weight_name)*100);
+        similarity_coordinates.push(parseFloat(data.results[i].weight_coordinates)*100);
+        similarity_type.push(parseFloat(data.results[i].weight_type)*100);
+
+    }
+    height_chart += date.length*40;
+
+    if(data.results.length != 0) {
+        $.noConflict();
+
+         $("#history").modal('show');
+        chart(date, texte, similarity_name, similarity_coordinates, similarity_type);
+    }
+    else {
+
+        toastr["info"]("Il n'y a pas d'historique pour le moment");
+        return false;
+    }
+    }
+
+
+
+function chart(date,texte,similarity_name , similarity_coordinates,similarity_type) {
+
+    Highcharts.chart('hist', {
+        chart: {
+            type: 'bar',
+            height: height_chart,
+            width: width_chart,
+        },
+        borderColor: '#022a3b',
+
+        title: {
+            text: texte,
+        },
+
+        xAxis: {
+            categories: date,
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'indice de similarité',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: '%'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'horizental',
+            align: 'center',
+            x: -20,
+            y: 10,
+            floating: false,
+            borderWidth: 2,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        colors: ['#1668b2', '#e85e03','#772184', '#1668b2', '#f7a35c', '#8085e9',
+            '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'],
+        series: [{
+            name: 'Indice de similartité sur le nom',
+            data: similarity_name
+        }, {
+            name: 'Indice de similartité sur les coordonnées',
+            data: similarity_coordinates
+        }, {
+            name: 'Indice de similarité sur le type',
+            data: similarity_type
+        }]
+    });
+}
+function iteration(url,callback){
+    var newurl='';
+    $.ajax({
+        type: 'GET',
+        headers: {
+            'Authorization':'Token '+localStorage.getItem('id_session'),
+            'Content-Type':'application/json'
+        },
+        url: url,
+
+
+        success: function (data) {
+            console.log('ok');
+            console.log(data);
+
+
+            /*for(var i = 0; i<data.results.length; i++) {
+                select_class= data.results[i].code.split('.');
+                code.push(select_class[0]);
+
+
+
+            }
+            console.log(code);
+
+            $.each(code, function(i, el){
+                if($.inArray(el, code_finale) === -1) code_finale.push(el);
+            });
+            console.log(code_finale);*/
+
+        },
+
+        error: function (requestss, status, error) {
+            toastr["error"]('Une erreur s\'est produite réessayer plus tard', {fadeAway: 100});
+
+
+        }
+    }).then(callback);
+    console.log('newurl='+newurl);
+}
+
+function getfeature_code() {
+    var code= [];
+    var code_finale = [];
+    var url='http://127.0.0.1:8000/feature-code?page=';
+    for(var i=1 ;i<35;i++){
+        console.log('dans while');
+        console.log('avant url='+url);
+        $.ajax({
+            type: 'GET',
+            headers: {
+                'Authorization':'Token '+localStorage.getItem('id_session'),
+                'Content-Type':'application/json'
+            },
+            url: url+i,
+
+
+            success: function (data) {
+                console.log(data);
+                for(var i = 0; i<data.results.length; i++) {
+                    select_class= data.results[i].code.split('.');
+                    code.push(select_class[0]);
+                }
+                console.log(code);
+
+                $.each(code, function(i, el){
+                    if($.inArray(el, code_finale) === -1) code_finale.push(el);
+                });
+                console.log(code_finale);
+
+            },
+
+            error: function (request, status, error) {
+                toastr["error"]('Une erreur s\'est produite réessayer plus tard', {fadeAway: 100});
+
+
+            }
+        });
+    }
+
+
 }

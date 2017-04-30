@@ -67,10 +67,7 @@
                             <br>
                             <label>Valeur( entre 0 et 1) : </label>
                             <ul id="valeur_parametre"></ul>
-                            <br>
 
-                            <label>Valeur par défaut</label>
-                            <input type="checkbox" name="alltype" value="alltype" id="type_default" checked>Tous les types
                             <br/>
                             <br/>
                             <div class="btn_pardefaut"></div>
@@ -171,6 +168,21 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade bs-example-modal-lg" id="history" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="hist">
+                ...
+            </div>
+
+        </div>
+    </div>
+</div>
 <footer>
     <p>
 
@@ -181,10 +193,13 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="javascript/script_js.js"></script>
 <script src="javascript/maps_correspondance.js"></script>
 <script src="javascript/configuration.js"></script>
 <script type="text/javascript" src="DataTables/datatables.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 </body>
 </html>

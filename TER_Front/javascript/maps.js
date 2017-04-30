@@ -11,14 +11,6 @@ var message_show = '<div id="patientez"><div class="modal-dialog"><div class="mo
     '<h2 class="modal-title">Patientez</h2></div> <div class="modal-body"><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>' +
     '<span class="sr-only">Loading...</span> </div></div></div> </div>';
 
-/*$(document).ajaxStart($.blockUI({message: '' +
-'<div id="patientez"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">' +
-    '<h2 class="modal-title">Patientez</h2></div> <div class="modal-body"><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>' +
-'<span class="sr-only">Loading...</span> </div></div></div> </div>'})).ajaxStop($.unblockUI({message: '' +
-'<div id="patientez"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">' +
-'<h2 class="modal-title">Patientez</h2></div> <div class="modal-body"><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>' +
-'<span class="sr-only">Loading...</span> </div></div></div> </div>'}));*/
-
 
 // Recherche de l'entité dans l'api de geoname
 
