@@ -1,10 +1,13 @@
 /**
  * Created by FADDI SOFIAA on 23/04/2017.
  */
+$(document).ready(function($){
+
+
 var parametre_data = [];
 var data_value = [];
 var sendone = 0;
-$(document).ajaxStart($.blockUI({message: '<h1><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i><br/> Patientez un instant...</h1>'})).ajaxStop($.unblockUI);
+//$(document).ajaxStart($.blockUI({message: '<h1><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i><br/> Patientez un instant...</h1>'})).ajaxStop($.unblockUI);
 var boolsend = false;
 var reinitialise = false;
 var height_chart = 250;
@@ -689,3 +692,4 @@ function getfeature_code() {
 
 
 }
+});

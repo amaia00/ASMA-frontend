@@ -1013,3 +1013,17 @@ width: 18%;
 #history #hist {
     height: 100%;
 }
+.non_imported {
+    opacity: 0.4;
+}
+.information_imported {
+    color: #F20D0D;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 15px;
+    border: 1px solid;
+    margin-bottom: 5px;
+}
+.information_imported a {
+    text-decoration: underline;
+}
