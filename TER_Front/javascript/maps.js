@@ -113,7 +113,7 @@ function getInformation(data) {
                 url: 'http://localhost:8000/country-imported',
                 success: function(data) {
                     for(var i =0; i< data.results.length;i++) {
-                        data_country.push(data.results[i].country_name);
+                        data_country.push(data.results[i].country_name.toLowerCase());
                     }
                 },
                 error: function(request, status, error) {
