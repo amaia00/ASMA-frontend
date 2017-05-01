@@ -61,7 +61,7 @@
                     <div class="panel-body score_pertinences_link">
                         <div class="plus_info">Plus d'informations<button type="button" title="Add new specific type"  id="show_more">
                             <i class="fa fa-plus" aria-hidden="true"></i></button></div>
-                        <h6><i class="fa fa-snowflake-o" aria-hidden="true"></i> Valeur par défaut pour les autres types</h6>
+                        <h6><i class="fa fa-snowflake-o" aria-hidden="true"></i> Valeur par défaut pour tous les types</h6>
                         <div class="name_parametre par_defaut"><label>Nom du paramètre : </label>
                             <ul id="name_parametre"></ul>
                             <br>
@@ -76,8 +76,8 @@
                         <h6><i class="fa fa-snowflake-o" aria-hidden="true"></i> Valeur pour des types bien spécifiques</h6>
                             <div class="autres"></div>
                            <div class="name_parametre_specific_autre"><label>Nom du paramètre : </label>
-                               <ul class="name_parametre_speci"><li>Poids du type<span> 0*</span>
-                               </li><li>Poids du nom<span> 1*</span></li><li>Poids des coordonnées<span> 2*</span></li></ul>
+                               <ul class="name_parametre_speci"><li>Indice De Similariter Sur Le Type<span> 0*</span>
+                               </li><li>Indice De Similariter Sur Le Nom<span> 1*</span></li><li>Indice De Similariter Sur Les Coordonnées<span> 2*</span></li></ul>
                                 <ul class="name_parametre_speci"></ul>
                                 <label>Valeur( entre 0 et 1) : </label>
                                <ul class="valeur_parametre_speci"><li><input class="type_edit form-control" value="1" type="number"min="0" step="0.1"
@@ -87,24 +87,14 @@
                                    <a><i class="fa fa-pencil" aria-hidden="true"></i></a></li></ul>
                                 <br>
                                 <div class="parametre_type_specific">
-                                 <div class="osm_type">
-                                        <div class="sous_cat">
-                                            <label>Clé OpenStreetMap</label>
-                                            <input id="cle_osm" type="text" class="form-control osmcle" placeholder="Par exemple 'amenity'"/>
-                                        </div>
-                                        <div class="sous_cat">
-                                            <label>Valeur OpenStreetMap</label>
-                                            <input id="valeur_osm"  type="text" class="form-control osmvaleur" placeholder="Par exemple 'restaurant'"/>
-                                        </div>
-                                    </div>
                                     <div class="geoname_type">
                                         <div class="sous_cat">
                                             <label>Classe Geoname</label>
-                                            <input id="class_gn" type="text" class="form-control classgn" placeholder="Par exemple 'S'" maxlength="1"/>
+                                            <select id="class_gn-' + data.results[i].id + '" type="text" class=" classgn form-control classgnselect_2"  placeholder="Par exemple S "></select>
                                         </div>
                                         <div class="sous_cat">
                                             <label>code Geoname</label>
-                                            <input id="code_gn" type="text" class="form-control codegn" placeholder="Par exemple 'rest' "/>
+                                            <select id="code_gn-' + data.results[i].id + '" class="form-control codegn codegnselect_2" placeholder="Par exemple rest "></select>
                                         </div>
                                     </div>
                                 </div>

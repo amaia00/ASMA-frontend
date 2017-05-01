@@ -1,17 +1,15 @@
 /**
  * Created by FADDI SOFIAA on 23/04/2017.
  */
-$(document).ready(function($){
-
-
 var parametre_data = [];
 var data_value = [];
 var sendone = 0;
-//$(document).ajaxStart($.blockUI({message: '<h1><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i><br/> Patientez un instant...</h1>'})).ajaxStop($.unblockUI);
+$(document).ajaxStart($.blockUI({message: '<h1><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i><br/> Patientez un instant...</h1>'})).ajaxStop($.unblockUI);
 var boolsend = false;
 var reinitialise = false;
 var height_chart = 250;
 var width_chart = $(window).width()- $(window).width()*0.3;
+var codes={};
 
 $(document).on('click','#historique', function (e) {
     e.preventDefault();
@@ -72,8 +70,8 @@ $('#config tbody').on('click', '.edit', function () {
         }
     });
 });
-getfeature_code();
-get_all_parameter();
+getfeature_code(codes);
+
 
     $.ajax({
         dataType: 'json',
@@ -119,13 +117,13 @@ get_all_parameter();
 function nommage(i) {
     var nom = 'gekk';
     if (i == 'weight_type') {
-        nom = 'Poids du type';
+        nom = 'Indice de similariter sur le type';
     }
     else if (i == 'weight_name') {
-        nom = 'Poids du nom';
+        nom = 'Indice de similariter sur le nom';
     }
     else if (i == 'weight_coordinates') {
-        nom = 'Poids des coordonnées';
+        nom = 'Indice de similariter sur les coordonnées';
     }
     return nom;
 
@@ -176,9 +174,17 @@ function get_all_parameter() {
                         'max="1" class="form-control valeur_input" disabled></li><li><input class="coordinate_edit form-control" value="' + data.results[i].weight_coordinates + '"type="number"min="0" step="0.1" ' +
                         'max="1" class="form-control valeur_input" disabled>' +
                         '<a><i class="fa fa-pencil" aria-hidden="true"></i></a></div></li></ul></div>');
-                    $(".autres").append('<div class="each_element-' + data.results[i].id + ' parametre_type_specific"><div class="geoname_type"> <div class="sous_cat"> <label>Classe Geoname</label> <input maxlength="1" id="class_gn-' + data.results[i].id + '" type="text" class=" classgn form-control" value="' + data.results[i].gn_feature_class + '" placeholder="Par exemple S "/> ' +
-                        '</div> <div class="sous_cat"> <label>code Geoname</label> <input class="codegn" id="code_gn-' + data.results[i].id + '" value="' + data.results[i].gn_feature_code + '" type="text" class="form-control codegn" placeholder="Par exemple rest "/> ' +
-                        '</div> </div></div><br/>');
+                    var form='<div class="each_element-' + data.results[i].id + ' parametre_type_specific"><div class="geoname_type"> <div class="sous_cat"> <label>Classe Geoname</label> <select id="class_gn-' + data.results[i].id + '" type="text" class=" classgn form-control classgnselect_1"  placeholder="Par exemple S ">';
+                    console.log('codes');
+                    console.log(codes);
+                    for (var k in codes){
+                        if (codes.hasOwnProperty(k) && k!='null') {
+                            form=form+'<option value="'+k+'">'+k+'</option>';
+                        }
+                    }
+                    form=form+'</select> ' +
+                        '</div> <div class="sous_cat"> <label>code Geoname</label> <select id="code_gn-' + data.results[i].id + '" class="form-control codegn  codegnselect_1">'+'</select> ' + '</div> </div></div><br/>';
+                    $(".autres").append(form);
                     $(".autres").append('<div class="each_element-' + data.results[i].id + '" style="text-align: center;"><br/><br/><button type="button" title="Add new specific type" ' +
                         'class="add_type" id="send_type-' + data.results[i].id + '">' +
                         '<i class="fa fa-floppy-o" aria-hidden="true"></i> Enregistrer</button><button type="button" title="remove specific type" ' +
@@ -343,7 +349,7 @@ $(document).on('click', '.add_type', function () {
 });
 $(document).on('click', '#defaut_param', function () {
 
-    get_all_parameter();
+    //get_all_parameter();
     if(reinitialise) {
         toastr["info"]("Les données ont été reinitialisé");
     }
@@ -610,86 +616,132 @@ function chart(date,texte,similarity_name , similarity_coordinates,similarity_ty
         }]
     });
 }
-function iteration(url,callback){
-    var newurl='';
-    $.ajax({
-        type: 'GET',
-        headers: {
-            'Authorization':'Token '+localStorage.getItem('id_session'),
-            'Content-Type':'application/json'
-        },
-        url: url,
-
-
-        success: function (data) {
-            console.log('ok');
-            console.log(data);
-
-
-            /*for(var i = 0; i<data.results.length; i++) {
-                select_class= data.results[i].code.split('.');
-                code.push(select_class[0]);
-
-
-
+function iteration(url,code){
+    //var newurl='http://127.0.0.1:8000/feature-code';
+   // console.log('iteration url =');
+    //console.log(url);
+    var keys=Object.keys(code);
+    var key = keys[keys.length-1];
+    var value=code[key];
+    if(url==null){
+        console.log('fin');
+        console.log(codes);
+        codes=code;
+        get_all_parameter();
+        var form='';
+        for (var k in codes){
+            if (codes.hasOwnProperty(k) && k!='null') {
+                form=form+'<option value="'+k+'">'+k+'</option>'
             }
-            console.log(code);
-
-            $.each(code, function(i, el){
-                if($.inArray(el, code_finale) === -1) code_finale.push(el);
-            });
-            console.log(code_finale);*/
-
-        },
-
-        error: function (requestss, status, error) {
-            toastr["error"]('Une erreur s\'est produite réessayer plus tard', {fadeAway: 100});
-
-
         }
-    }).then(callback);
-    console.log('newurl='+newurl);
-}
-
-function getfeature_code() {
-    var code= [];
-    var code_finale = [];
-    var url='http://127.0.0.1:8000/feature-code?page=';
-    for(var i=1 ;i<35;i++){
-        console.log('dans while');
-        console.log('avant url='+url);
+        $('.classgnselect_2').append(form);
+    }else{
         $.ajax({
             type: 'GET',
             headers: {
                 'Authorization':'Token '+localStorage.getItem('id_session'),
                 'Content-Type':'application/json'
             },
-            url: url+i,
+            url: url,
 
 
             success: function (data) {
-                console.log(data);
-                for(var i = 0; i<data.results.length; i++) {
-                    select_class= data.results[i].code.split('.');
-                    code.push(select_class[0]);
-                }
-                console.log(code);
+                //console.log(url);
+                //console.log('ok');
+                //console.log(data);
+                url=data.next;
 
-                $.each(code, function(i, el){
-                    if($.inArray(el, code_finale) === -1) code_finale.push(el);
-                });
-                console.log(code_finale);
+                for(var i = 0; i<data.results.length; i++) {
+                    //console.log('i='+i);
+                    select_class= data.results[i].code.split('.');
+                    //console.log('select_class[0]');
+                    //console.log(select_class[0]);
+                    //console.log('key');
+                    //console.log(key);
+                    //value = code[key];
+                    //console.log('value');
+                    //console.log(value);
+
+
+                    if(key != select_class[0]){
+                        //console.log('in if');
+                        key = select_class[0];
+                        value=[];
+                        value.push([select_class[1],data.results[i].name]);
+                    }else{
+                        //console.log('in else');
+                        value=code[key];
+                        value.push([select_class[1],data.results[i].name]);
+                    }
+                    //console.log('after key=');
+                    //console.log(key);
+                    code[key]=value;
+
+                    //console.log('after add value=');
+                    //console.log(code[key]);
+
+
+                 }
+                 //console.log(code);
+
+                 /*$.each(code, function(i, el){
+                 if($.inArray(el, code_finale) === -1) code_finale.push(el);
+                 });
+                 console.log(code_finale);*/
 
             },
 
-            error: function (request, status, error) {
+            error: function (requestss, status, error) {
                 toastr["error"]('Une erreur s\'est produite réessayer plus tard', {fadeAway: 100});
 
 
             }
+        }).then(function(){
+            //console.log('newurl=');
+            //console.log(url);
+            //console.log(code);
+            iteration(url,code);
         });
     }
 
-
+    //console.log('newurl='+newurl);
 }
+
+function getfeature_code(code) {
+    code= {};
+    var code_finale = [];
+    var url='http://127.0.0.1:8000/feature-code';
+    iteration(url,code);
+}
+
+$(document).on('change','.classgnselect_1',function(){
+    var form='';
+    $('.codegnselect_1').empty();
+    for (var k in codes){
+        if (codes.hasOwnProperty(k) && k==$(this).val()) {
+            for(var i =0; i<codes[k].length ; i++){
+                form=form+'<option value="'+codes[k][i][0]+'"><a href="#" data-toggle="tooltip" data-placement="bottom" title="'+codes[k][i][1]+'">'+codes[k][i][0]+'</a></option>'
+            }
+            break;
+        }
+    }
+    $('.codegnselect_1').append(form);
+    //$.noConflict();
+    //$('[data-toggle="tooltip"]').tooltip();
+});
+$(document).on('change','.classgnselect_2',function(){
+    $('.codegnselect_2').empty();
+    console.log('ok');
+    var form='';
+    for (var k in codes){
+        if (codes.hasOwnProperty(k) && k==$(this).val()) {
+            for(var i =0; i<codes[k].length ; i++){
+                form=form+'<option value="'+codes[k][i][0]+'" data-toggle="tooltip" data-placement="bottom" title="'+codes[k][i][1]+'">'+codes[k][i][0]+'</option>'
+            }
+            break;
+        }
+    }
+    $('.codegnselect_2').append(form);
+    //$.noConflict();
+    //$('[data-toggle="tooltip"]').tooltip();
 });

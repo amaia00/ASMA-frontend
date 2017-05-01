@@ -564,16 +564,16 @@ h6 {
 #config tbody tr td:first-child {
 	text-align: left;
 }
-.patientez .modal-title {
+.patientez .modal-title , #patientez .modal-title {
 	background: #1668b2;
 	color:#fff;
 	padding: 20px 0;
 	text-align: center;
 }
-.patientez .modal-header {
+.patientez .modal-header , #patientez .modal-header {
 	padding: 0;
 }
-.patientez .modal-body {
+.patientez .modal-body , #patientez .modal-body {
 	text-align: center;
 	margin: 20px 0;
 }
@@ -649,7 +649,7 @@ table.dataTable tbody tr {
     margin-top: -5px;
     margin-left: -5px;
 }
-.matching_of_entity , #add_type, #show_more, #hide_more, #send_type, #defaut_param, #demare, .add_type , .remove_type, .btn_authen {
+.matching_of_entity , #add_type, #show_more, #hide_more, #send_type, #defaut_param, #demare, .add_type , .remove_type, .btn_authen , #historique{
     background: #022a3b;
     border: 0;
     color: #fff;
@@ -759,8 +759,7 @@ h2 {
 #name_parametre li , .name_parametre_speci li {
     width: 25%;
     display: inline-block;
-    text-transform: capitalize;
-    font-size: 13px;
+    font-size: 12px;
     vertical-align: top;
     word-wrap: break-word;
     padding: 0 2px;

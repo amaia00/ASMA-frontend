@@ -48,10 +48,10 @@
     <fieldset>
         <legend>Importation: </legend>
         <div class="input-group">
-            <label>Fournisseur : </label><input type="text" class="form-control" id="provider" placeholder="GEONAMES ou OSM" />
+            <label>Nom du fichier  : </label><input type="text" class="form-control" id="nom_file" placeholder="Par exemple FR.osm" />
         </div>
         <div class="input-group">
-            <label>Nom du fichier  : </label><input type="text" class="form-control" id="nom_file" placeholder="FR.txt ou FR.xml" />
+            <label>Nom du pays  : </label><input type="text" class="form-control" id="nom_country" placeholder="Pays  en ANGLAIS" />
         </div>
         <button type="button" title="Importation" class="matching_of_entity" id="import">
             Importer</button>
@@ -96,6 +96,26 @@
 
 </div>
 </div>
+
+
+<div id="patientez" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Patientez
+                </h2>
+            </div>
+            <div class="modal-body">
+                <i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>
+                <span class="sr-only">Loading...</span>
+                <p style="text-align: center;margin: 30px 0;font-size: 16px;">Veuillez patienter, cette action peut prendre quelques minutes...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="javascript/script_js.js"></script>
