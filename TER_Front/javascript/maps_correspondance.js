@@ -483,8 +483,8 @@ function add_to_map(idgn, idosm) {
             $("#distance .progress-bar ").attr("aria-valuenow", Math.round(information_data[i].similarity_name * 100));
             $("#distance .progress-bar ").css("width", Math.round(information_data[i].similarity_name * 100) + "%");
             $("#coordinate .score").html(parseFloat((information_data[i].similarity_coordinates * 100).toFixed(2)) + "%");
-            $("#coordinate .progress-bar ").attr("aria-valuenow", Math.round(information_data[i].similarity_coordinates * 100, 2));
-            $("#coordinate .progress-bar ").css("width", Math.round(information_data[i].similarty_coordinates * 100, 2) + "%");
+            $("#coordinate .progress-bar ").attr("aria-valuenow", Math.round(information_data[i].similarity_coordinates * 100));
+            $("#coordinate .progress-bar ").css("width", Math.round(information_data[i].similarity_coordinates * 100) + "%");
             var data = information_data[i].osm_shape.toLowerCase()+"("+information_data[i].reference_osm+");(._;>;);out;";
             overpasse(data);
             console.log(information_data[i].validation);
@@ -582,6 +582,8 @@ function array_information(gn) {
             $("#patientez").css('display', 'none');
             $(".modal-backdrop.in").remove();
 
+        }
+    }).then(function () {
 
             if ($("#correspondance").length != 0) {
 
@@ -605,8 +607,9 @@ function array_information(gn) {
                     "bInfo": false
                 });
             }
-        }
-    });
+        })
+
+
 }
 
 
@@ -715,5 +718,68 @@ function get_limit_color() {
 
 }
 
+$("#invalider2").on('click', function () {
+    var id_osm = $(this).parent().parent().find("input").attr("id");
+    var valeur_osm = $("#" + id_osm).val();
+    var key_osm;
+    var value_osm;
+    var code_gn = $("#g2fcode").val();
+    var class_gn = $("#g2fclass").val();
+    var data;
+    if(valeur_osm == ' ') {
+        var split_variable_tags = $(this).parent().parent().find("select").val().split('=');
+        key_osm = split_variable_tags[0];
+        value_osm = split_variable_tags[1];
 
+    }
+    else if (valeur_osm != ' ') {
+        var split_variable = valeur_osm.split("=");
+        key_osm = split_variable[0];
+        value_osm = split_variable[1];
+    }
+    data = {
+        'gn_feature_class': class_gn.replace(/\s/g, ''),
+        'gn_feature_code': code_gn.replace(/\s/g, ''),
+        'osm_key': key_osm.replace(/\s/g, ''),
+        'osm_value': value_osm.replace(/\s/g, '')
+
+    },
+        $.ajax({
+            url: 'http://localhost:8000/correspondence-invalid-type',
+            type: 'POST',
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+
+            success: function (data) {
+                toastr.options = {
+                    "showDuration": "2000",
+                    "hideDuration": "1000",
+                    "timeOut": "2000",
+                    "extendedTimeOut": "0"
+                },
+                    toastr["success"]('La correspondance du type a été enregistré ! Merci');
+            },
+            error: function (request, status, error) {
+                toastr.options = {
+                    "showDuration": "500",
+                    "hideDuration": "1000",
+                    "timeOut": "500",
+                    "extendedTimeOut": "0"
+                },
+                    toastr["error"]('Une erreur s\'est produite réessayer plus tard');
+
+                console.log(request);
+
+            },
+            beforeSend: function () {
+                $('.load').css('display','block');
+            },
+            complete: function () {
+                $('.load').css('display','none');
+            }
+
+        });
+
+});
 
