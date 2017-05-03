@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
 
 </head>
@@ -47,8 +47,8 @@
     <div class="container">
         <div class="contenu" style="padding: 20px 0;">
 
-        <h6>Vous pouvez changer les coefficients des attributs de décisons permettant de calculer le score de pertinance .<br/>
-            La valeur de chaque coefficient dans les paramètres du score de pertinence doit être borné entre 0 et 1.</h6>
+        <h6>Vous pouvez changer les coefficients des attributs de décisons permettant de calculer le score de pertinence .<br/>
+            La valeur de chaque coefficient dans les paramètres du score de pertinence doit être bornée entre 0 et 1.</h6>
         <div class="panel-group" id="accordion">
             <div  id="panel1"class="panel panel-default">
                 <div class="panel-heading">
@@ -93,7 +93,7 @@
                                             <select id="class_gn-' + data.results[i].id + '" type="text" class=" classgn form-control classgnselect_2"  placeholder="Par exemple S "></select>
                                         </div>
                                         <div class="sous_cat">
-                                            <label>code Geoname</label>
+                                            <label>Code Geoname</label>
                                             <select id="code_gn-' + data.results[i].id + '" class="form-control codegn codegnselect_2" placeholder="Par exemple rest "></select>
                                         </div>
                                     </div>
@@ -109,8 +109,7 @@
                             <br/><br/><br/>
                         <button type="button" title="Add new specific type" class="arriere_type" id="defaut_param">
                             <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Revenir au valeur actuelle</button>
-                        <button type="button" title="Add new specific type" class="add_type" id="demare">
-                            <i class="fa fa-cog" aria-hidden="true"></i>Démarer</button></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -173,10 +172,17 @@
         </div>
     </div>
 </div>
-<footer>
-    <p>
+<div class="attendre"><div class="pro">
+    <h2 class="modal-title">Patientez</h2>
+    <i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>
+    <p>Merci de patienter cela peut prendre quelques minutesfc</p>
+    <div class="progress">
 
-    </p>
+    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+    </div>
+    </div>
+</div></div>
+<footer>
 </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="javascript/jquery.blockUI.js"></script>
@@ -189,7 +195,7 @@
 <script src="javascript/maps_correspondance.js"></script>
 <script src="javascript/configuration.js"></script>
 <script type="text/javascript" src="DataTables/datatables.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 </body>
 </html>

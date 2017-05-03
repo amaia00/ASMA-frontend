@@ -564,7 +564,7 @@ h6 {
 #config tbody tr td:first-child {
 	text-align: left;
 }
-.patientez .modal-title , #patientez .modal-title {
+.patientez .modal-title , #patientez .modal-title, .attendre .modal-title {
 	background: #1668b2;
 	color:#fff;
 	padding: 20px 0;
@@ -649,8 +649,9 @@ table.dataTable tbody tr {
     margin-top: -5px;
     margin-left: -5px;
 }
-.matching_of_entity , #add_type, #show_more, #hide_more, #send_type, #defaut_param, #demare, .add_type , .remove_type, .btn_authen , #historique{
+.matching_of_entity , #add_type, #show_more, #hide_more, #send_type, #defaut_param, #demare, .add_type , .remove_type, .btn_authen , #historique, .indice{
     background: #022a3b;
+    margin-bottom: 20px;
     border: 0;
     color: #fff;
     margin-right: 20px;
@@ -762,7 +763,8 @@ h2 {
     font-size: 12px;
     vertical-align: top;
     word-wrap: break-word;
-    padding: 0 2px;
+    padding: 10px 3px;
+    text-transform: lowercase;
 }
 #name_parametre span, .rectangles_information span , .name_parametre_speci span {
     color:#d9534f;
@@ -814,9 +816,6 @@ h2 {
 }
 .para_cat {
     display: inline;
-}
-.name_parametre_speci li , #name_parametre li {
-    line-height: 40px;
 }
 .btn_pardefaut {
     text-align: center;
@@ -1025,4 +1024,62 @@ width: 18%;
 }
 .information_imported a {
     text-decoration: underline;
+}
+
+.attendre {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.attendre .pro {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 50%;
+    background: #fff;
+    padding-bottom:50px;
+    text-align: center;
+    color:#022a3b;
+    font-size:15px;
+
+}
+
+.attendre .progress {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.attendre  p {
+    margin: 20px 0;
+}
+.attendre .modal-title {
+    margin-bottom: 40px;
+}
+
+@media screen and (max-width: 1000px) {
+    .name_parametre label, .name_parametre_specific label, .all_element_config label, .name_parametre_specific_autre label, .importation label{
+        font-size: 14px;
+        width: 23%;
+    }
+    .sous_cat label {
+        width: 100%;
+    }
+    .name_parametre select, .name_parametre input[type="number"], .valeur_parametre_speci input[type="number"], .valeur_parametre_speciselect {
+        width: 22%;
+    }
+    .contenu {
+        width: 100%;
+    }
+    h6 {
+        font-size: 14px;
+    }
+    #correspondance>tbody>tr>td, #correspondance>tbody>tr>th, #correspondance>tfoot>tr>td, #correspondance>tfoot>tr>th, #correspondance>thead>tr>td, #correspondance>thead>tr>th, #config>tbody>tr>td, #config>tbody>tr>th, #config>tfoot>tr>td, #config>tfoot>tr>th, #config>thead>tr>td, #config>thead>tr>th {
+        font-size: 13px;
+    }
+    table.dataTable {
+        margin-bottom: 20px !important;
+    }
 }

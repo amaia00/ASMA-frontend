@@ -71,7 +71,6 @@ if(current_url[len] == 'configuration.html') {
 function montrer_data() {
 
     var id_session_user = localStorage.getItem('id_session');
-    console.log(id_session_user);
     if(id_session_user != null) {
         $('#menu').prepend('<li><a href="configuration.html">Configuration</a></li>');
         $('.login_in').hide;

@@ -4,12 +4,30 @@
 var parametre_data = [];
 var data_value = [];
 var sendone = 0;
-$(document).ajaxStart($.blockUI({message: '<h1><i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i><br/> Patientez un instant...</h1>'})).ajaxStop($.unblockUI);
 var boolsend = false;
 var reinitialise = false;
 var height_chart = 250;
 var width_chart = $(window).width()- $(window).width()*0.3;
 var codes={};
+var error= false;
+
+$(document).on('mouseover', '.tool ', function(e)  {
+    var $e = $(e.target);
+    console.log("ddddd");
+    if ($e.is('option')) {
+        $('.select_class').tooltip('destroy');
+        $('.select_class').tooltip({
+            placement: 'right',
+            title: $e.attr("data-title"),
+        });
+    }
+});
+
+$("#testList").on('mouseleave', function(e) {
+    $('#testList').popover('destroy');
+});
+
+
 
 $(document).on('click','#historique', function (e) {
     e.preventDefault();
@@ -115,15 +133,14 @@ getfeature_code(codes);
 
 
 function nommage(i) {
-    var nom = 'gekk';
     if (i == 'weight_type') {
-        nom = 'Indice de similariter sur le type';
+        nom = 'Indice de similarité sur le type';
     }
     else if (i == 'weight_name') {
-        nom = 'Indice de similariter sur le nom';
+        nom = 'Indice de similarité sur le nom';
     }
     else if (i == 'weight_coordinates') {
-        nom = 'Indice de similariter sur les coordonnées';
+        nom = 'Indice de similarité sur les coordonnées';
     }
     return nom;
 
@@ -152,9 +169,12 @@ function get_all_parameter() {
                         'max="1" class="form-control valeur_input" disabled></li><li><input class="coordinate_edit form-control" value="' + data.results[i].weight_coordinates + '"type="number"min="0" step="0.1" ' +
                         'max="1" class="form-control valeur_input" disabled>' +
                         '<a><i class="fa fa-pencil" aria-hidden="true"></i></a></div></li>');
-                    $('.btn_pardefaut').append('<button type="button" title="Add new specific type" class="add_type" id="send_type-'+  + data.results[i].id+'"> ' +
-                        '<i class="fa fa-floppy-o" aria-hidden="true"></i> Enregistrer</button> <button type="button" title="Add new specific type"  data-target="#history"  id="historique"> ' +
-                        '<i class="fa fa-history" aria-hidden="true"></i></i>Historique</button> <br/> <br/>');
+                    $('.btn_pardefaut').append('<button type="button" title="Enregistrer" class="add_type" id="send_type-'+  + data.results[i].id+'"> ' +
+                        '<i class="fa fa-floppy-o" aria-hidden="true"></i> Enregistrer</button> <button type="button" title="Historique des indices de similarité"  data-target="#history"  id="historique"> ' +
+                        '<i class="fa fa-history" aria-hidden="true"></i></i>Historique</button> <button type="button" title="Demarer l&apos;alignement" class="add_demare" id="demare"> ' +
+                        '<i class="fa fa-cog" aria-hidden="true"></i>Démarer</button><button type="button" title="indice de similarité optimal" ' +
+                        'class="indice" id="indice"> ' +
+                        '<i class="fa fa-wrench" aria-hidden="true"></i>Valeurs optimales</button><br/> <br/>');
 
 
                     data_value.push(data.results[i].weight_type);
@@ -174,16 +194,15 @@ function get_all_parameter() {
                         'max="1" class="form-control valeur_input" disabled></li><li><input class="coordinate_edit form-control" value="' + data.results[i].weight_coordinates + '"type="number"min="0" step="0.1" ' +
                         'max="1" class="form-control valeur_input" disabled>' +
                         '<a><i class="fa fa-pencil" aria-hidden="true"></i></a></div></li></ul></div>');
-                    var form='<div class="each_element-' + data.results[i].id + ' parametre_type_specific"><div class="geoname_type"> <div class="sous_cat"> <label>Classe Geoname</label> <select id="class_gn-' + data.results[i].id + '" type="text" class=" classgn form-control classgnselect_1"  placeholder="Par exemple S ">';
-                    console.log('codes');
-                    console.log(codes);
+                    var form='<div class="each_element-' + data.results[i].id + ' parametre_type_specific"><div class="geoname_type"> <div class="sous_cat"> <label>Classe Geoname</label> <select id="class_gn-' + data.results[i].id + '" type="text" class=" select_class classgn form-control classgnselect_1"  placeholder="Par exemple S ">' +
+                        '<option class="tool" data-toggle="tooltip" data-placement="left" title="Tooltip on left" value="'+data.results[i].gn_feature_class+'">'+data.results[i].gn_feature_class+'</option>';
                     for (var k in codes){
-                        if (codes.hasOwnProperty(k) && k!='null') {
-                            form=form+'<option value="'+k+'">'+k+'</option>';
+                        if (codes.hasOwnProperty(k) && k!='null' && k!=data.results[i].gn_feature_class) {
+                            form=form+'<option class="tool" data-trigger="hover" data-toggle="tooltip" data-placement="left" title="Tooltip on left" value="'+k+'">'+k+'</option>';
                         }
                     }
                     form=form+'</select> ' +
-                        '</div> <div class="sous_cat"> <label>code Geoname</label> <select id="code_gn-' + data.results[i].id + '" class="form-control codegn  codegnselect_1">'+'</select> ' + '</div> </div></div><br/>';
+                        '</div> <div class="sous_cat"> <label>Code Geoname</label> <select id="code_gn-' + data.results[i].id + '" class="form-control codegn  codegnselect_1">'+'<option value="'+data.results[i].gn_feature_code+'">'+data.results[i].gn_feature_code+'</option>'+'</select> ' + '</div> </div></div><br/>';
                     $(".autres").append(form);
                     $(".autres").append('<div class="each_element-' + data.results[i].id + '" style="text-align: center;"><br/><br/><button type="button" title="Add new specific type" ' +
                         'class="add_type" id="send_type-' + data.results[i].id + '">' +
@@ -200,6 +219,16 @@ function get_all_parameter() {
             toastr["error"]('Une erreur s\'est produite réessayer plus tard', {fadeAway: 5000});
 
             reinitialise = false;
+        },
+        beforeSend: function () {
+           // $.noConflict();
+             //$('#patientez').modal("show");
+            // a refaire avec ma méthode
+        },
+        complete: function () {
+            //$.noConflict();
+           // $('#patientez').modal("hide");
+
         },
 
 
@@ -279,12 +308,12 @@ $(document).on('click', '.add_type', function () {
     var type_edit = $(this).parent().parent().find('.type_edit').val();
     var name_edit = $(this).parent().parent().find('.name_edit').val();
     var coordinate_edit = $(this).parent().parent().find('.coordinate_edit').val();
-    var osmcle = $(this).parent().parent().find('.osmcle').val();
-    var osmvaleur = $(this).parent().parent().find('.osmvaleur').val();
+    //var osmcle = $(this).parent().parent().find('.osmcle').val();
+    //var osmvaleur = $(this).parent().parent().find('.osmvaleur').val();
     var classgn = $(this).parent().parent().find('.classgn').val();
     var codegn = $(this).parent().parent().find('.codegn').val();
     console.log(codegn);
-    if (type_edit == ''|| name_edit == ''|| coordinate_edit == ''|| osmcle == ''|| osmvaleur == ''|| classgn == ''|| codegn== '' ) {
+    if (type_edit == ''|| name_edit == ''|| coordinate_edit == ''||  classgn == ''|| codegn== '' ) {
             toastr["error"]('Un des champs est vide', {fadeAway: 5000});
 
 
@@ -304,43 +333,35 @@ $(document).on('click', '.add_type', function () {
 
                 if(parametre_data.results[j].id==id) {
 
-                    console.log(type_edit == parametre_data.results[j].weight_type  && name_edit == parametre_data.results[j].weight_name &&
-                    coordinate_edit == parametre_data.results[j].weight_coordinates  && osmcle == undefined &&
-                    osmvaleur == undefined  && classgn ==undefined
-                    && codegn== undefined);
                     if (type_edit == parametre_data.results[j].weight_type  && name_edit == parametre_data.results[j].weight_name &&
-                        coordinate_edit == parametre_data.results[j].weight_coordinates  && osmcle == parametre_data.results[j].osm_key_type &&
-                        osmvaleur == parametre_data.results[j].osm_value_type  && classgn == parametre_data.results[j].gn_feature_class
+                        coordinate_edit == parametre_data.results[j].weight_coordinates  && classgn == parametre_data.results[j].gn_feature_class
                         && codegn== parametre_data.results[j].gn_feature_code) {
 
                         boolsend = false;
                             toastr["info"]('Vous avez rien modifié', {fadeAway: 5000});
 
                     } else if(type_edit == parametre_data.results[j].weight_type  && name_edit == parametre_data.results[j].weight_name &&
-                        coordinate_edit == parametre_data.results[j].weight_coordinates  && osmcle == undefined &&
-                        osmvaleur == undefined  && classgn ==undefined
+                        coordinate_edit == parametre_data.results[j].weight_coordinates   && classgn ==undefined
                         && codegn== undefined) {
                         boolsend = false;
                         toastr["info"]('Vous avez rien modifié', {fadeAway: 5000});
 
                     }
                     else {
-                        console.log('jiji');
                         boolsend = true;
                     }
                 }
             }
              if(id == 'defaut') {
 
-                sendpost(type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn);
+                sendpost(type_edit, name_edit, coordinate_edit ,classgn, codegn);
             }
             else if(id==sendone && boolsend == true) {
                 sendonerequest(type_edit, name_edit, coordinate_edit);
                 height_chart+= 60;
             }
             if (id != 'defaut' && id !=sendone  && boolsend == true) {
-                console.log('pardefaullt');
-                sendrequest( type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn);
+                sendrequest( type_edit, name_edit, coordinate_edit, classgn, codegn);
             }
         }
         }
@@ -378,14 +399,12 @@ function correct_form(array1) {
         return false;
     }
 }
-function sendrequest( type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn) {
+function sendrequest( type_edit, name_edit, coordinate_edit, classgn, codegn) {
     var data = {
         name: "weight_matching",
         weight_type: type_edit,
         weight_name: name_edit,
         weight_coordinates: coordinate_edit,
-        osm_key_type: osmcle,
-        osm_value_type: osmvaleur,
         gn_feature_class: classgn,
         gn_feature_code: codegn,
         all_types: false,
@@ -393,7 +412,7 @@ function sendrequest( type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, 
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: 'http://localhost:8000/parameters-score-pertinence/',
+        url: 'http://localhost:8000/parameters-score-pertinence',
         headers: {
             'Authorization':'Token '+localStorage.getItem('id_session'),
             'Content-Type':'application/json'
@@ -410,14 +429,12 @@ function sendrequest( type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, 
         }
     });
 }
-function sendpost( type_edit, name_edit, coordinate_edit, osmcle, osmvaleur, classgn, codegn) {
+function sendpost( type_edit, name_edit, coordinate_edit,  classgn, codegn) {
     var data = {
         name: "weight_matching",
         weight_type: type_edit,
         weight_name: name_edit,
         weight_coordinates: coordinate_edit,
-        osm_key_type: osmcle.toLowerCase(),
-        osm_value_type: osmvaleur.toLowerCase(),
         gn_feature_class: classgn.toUpperCase(),
         gn_feature_code: codegn.toUpperCase(),
         all_types: false,
@@ -744,4 +761,135 @@ $(document).on('change','.classgnselect_2',function(){
     $('.codegnselect_2').append(form);
     //$.noConflict();
     //$('[data-toggle="tooltip"]').tooltip();
+});
+var interval = null;
+$(document).on('click','#demare',function (e) {
+    var data = {name: 'global-match'};
+    var id='';
+    console.log(data);
+
+    $.ajax({
+        url: 'http://localhost:8000/scheduled-work',
+        headers: {
+            'Authorization': 'Token ' + localStorage.getItem('id_session'),
+            'Content-Type': 'application/json'
+        },
+        type: 'POST',
+        dataType: 'json',
+        contentType: "application/json",
+        data: JSON.stringify(data),
+
+        success: function (data) {
+            id=data.id;
+            toastr["success"]('Correspondance plannifiée. Elle démarera dans quelque instatnt. Merci de patienter.', {fadeAway: 2000});
+            /*$('#import_table tbody').append('<tr><td>'+ data.provider+'</td><td>'+ data.status+'</td>' +
+             '<td>'+ data.initial_date+'</td><td>'+data.affected_rows+'</td><td>'+data.error_rows+'</td><td>'+data.total_rows+'</td> ');
+             $('#import_table').css('display', 'block');
+             toastr.success('L\'importation va commencer', {fadeAway: 100});*/
+        }
+        ,
+        error: function (request) {
+            $('.attendre').css('display','none');
+            console.log(request.responseText);
+
+        }
+
+    }).then(function () {
+        $('.attendre').css('display','block');
+        $('.attendre .progress').css('display','none');
+        interval = setInterval("checkfin(" + id + ")", 5500);
+    });
+});
+
+var b = false;
+function checkfin(id){
+    $.ajax({
+        url: 'http://localhost:8000/scheduled-work/'+id,
+        headers: {
+            'Authorization':'Token '+localStorage.getItem('id_session'),
+            'Content-Type':'application/json'
+        },
+        type: 'GET',
+        dataType: 'json',
+        contentType: "application/json",
+
+        success: function (data) {
+            if(data.detail!= 'Not found.'){
+                if(data.status=='IN PROGRESS' ){
+                    var pourcentage = parseInt(data.affected_rows)/parseInt(data.total_rows);
+                    error = false;
+                    $('.attendre .progress').css('display','block');
+                    $(".attendre .progress-bar ").attr("aria-valuenow", Math.round(pourcentage * 100));
+                    $(".attendre .progress-bar ").css("width",  Math.round(pourcentage * 100)+'%');
+
+                }
+                if(data.status=='FINALIZED' || data.status=='ERROR' ){
+                    b=true;
+                    if(data.status=='FINALIZED'){
+                        clearInterval(interval); // stop the interval
+                        toastr["success"]('L\'alignement des données a réussi.', {fadeAway: 2000});
+                    }
+                    if(data.status=='ERROR'){
+                        b=false;
+                        clearInterval(interval); // stop the interval
+
+                        register(error);
+                        toastr["error"]('L\'alignement des données a échoué.', {fadeAway: 2000});
+                    }
+                }
+            }
+        }
+        ,
+        error: function (request) {
+
+            console.log(request.responseText);
+
+        }
+
+    }).then(function(){
+        console.log(b);
+        if(b){
+            $('.attendre').css('display','none');
+        }
+    });
+}
+
+function register(error_local) {
+    error = error_local;
+
+}
+
+$(document).on('click','#indice',function (e) {
+    var data = {name: 'learning-algorithm'};
+    var id='';
+
+    $.ajax({
+        url: 'http://localhost:8000/scheduled-work',
+        headers: {
+            'Authorization': 'Token ' + localStorage.getItem('id_session'),
+            'Content-Type': 'application/json'
+        },
+        type: 'POST',
+        dataType: 'json',
+        contentType: "application/json",
+        data: JSON.stringify(data),
+
+        success: function (data) {
+            id=data.id;
+            toastr["success"]('Correspondance plannifiée. Elle démarera dans quelque instatnt. Merci de patienter.', {fadeAway: 2000});
+            /*$('#import_table tbody').append('<tr><td>'+ data.provider+'</td><td>'+ data.status+'</td>' +
+             '<td>'+ data.initial_date+'</td><td>'+data.affected_rows+'</td><td>'+data.error_rows+'</td><td>'+data.total_rows+'</td> ');
+             $('#import_table').css('display', 'block');
+             toastr.success('L\'importation va commencer', {fadeAway: 100});*/
+        }
+        ,
+        error: function (request) {
+
+            console.log(request.responseText);
+
+        }
+
+    }).then(function () {
+
+    });
 });
