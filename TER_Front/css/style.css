@@ -1107,6 +1107,7 @@ width: 18%;
     text-align: center;
     padding: 0 25px;
     font-size: 45px;
+    display: none;
 }
 .valide_popup {
     position: relative;
