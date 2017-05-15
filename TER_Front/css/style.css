@@ -668,6 +668,7 @@ table.dataTable tbody tr {
 .matching_of_entity:hover, #add_type:hover,  #show_more:hover, #hide_more:hover, #demare:hover,  #send_type:hover, #defaut_param:hover , .add_type:hover,
 .btn_authen:hover{
      background: #1668b2;
+    color: #fff;
 }
 .bouton_entity {
     display: inline-block;
@@ -1034,12 +1035,13 @@ width: 18%;
     bottom: 0;
     right: 0;
     background: rgba(0,0,0,0.5);
+    z-index: 999999;
 }
 
 .attendre .pro {
     width: 60%;
     margin: 0 auto;
-    margin-top: 50%;
+    margin-top: 20%;
     background: #fff;
     padding-bottom:50px;
     text-align: center;
@@ -1094,4 +1096,27 @@ width: 18%;
     border-radius: 0 0 20px 20px;
     -webkit-border-radius: 0 0 20px 20px;
     -moz-border-radius: 0 0 20px 20px;
+}
+.load_type {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.8);
+    text-align: center;
+    padding: 0 25px;
+    font-size: 45px;
+}
+.valide_popup {
+    position: relative;
+}
+video {
+    display: block;
+    margin: 0 auto;
+}
+.ville a {
+    color: #1668b2;
+    padding: 0 3px;
+    text-decoration: underline;
 }

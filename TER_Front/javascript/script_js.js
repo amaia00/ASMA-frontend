@@ -1,3 +1,15 @@
+
+window.onload = function() {
+    var current_url = window.location.href.split('/');
+    var len = current_url.length - 1;
+    if(current_url[len] == 'configuration.html'|| current_url[len] == 'import.html') {
+        var id_session_user = localStorage.getItem('id_session');
+        if(id_session_user==null) {
+            document.location.href = "login.html";
+        }
+    }
+};
+
 montrer_data();
 $(document).ready(function(){
    $(".carte a").click(function()  {
@@ -59,11 +71,14 @@ $(".form_close").click(function() {
 $('.login_out').on('click', function () {
    localStorage.clear();
     $('#menu li').first().remove();
+    $( "#menu li:eq(0)" ).remove();
+    toastr["info"]('Vous vous etes déconnectés');
+
     montrer_data();
     var current_url = window.location.href.split('/');
     var len = current_url.length - 1;
    //var config_link = current_url;​​​
-if(current_url[len] == 'configuration.html') {
+if(current_url[len] == 'configuration.html'|| current_url[len] == 'import.html') {
     document.location.href="login.html";
 }
 
@@ -73,6 +88,8 @@ function montrer_data() {
     var id_session_user = localStorage.getItem('id_session');
     if(id_session_user != null) {
         $('#menu').prepend('<li><a href="configuration.html">Configuration</a></li>');
+        $('#menu').prepend('<li><a href="import.html">Importation des données </a></li>');
+
         $('.login_in').hide;
         $('.login_out').show();
     }

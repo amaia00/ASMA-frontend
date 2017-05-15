@@ -50,10 +50,12 @@ $(function ($) {
 
 $('#config tbody').on('click', '.edit', function () {
     var data  = {
-        name: $(this).parent().find('.name').text(),
+        name: $(this).parent().find('td').attr('id'),
         value: $(this).parent().find('.valeur').val(),
-        description: $(this).parent().find('.description').text()
+        description: $(this).parent().find('.description').text(),
+        client_name: $(this).parent().find('.name').text()
     };
+    console.log(data);
     var element_change = $(this).parent().attr('id').split('-');
     console.log($(this).parent().find('.valeur').val());
     var element_change_id = element_change[1];
@@ -78,6 +80,7 @@ $('#config tbody').on('click', '.edit', function () {
 
         },
         error: function (request, status, error) {
+            console.log(request);
             toastr.options = {
                 "showDuration": "1000",
                 "hideDuration": "1000",
@@ -97,7 +100,7 @@ getfeature_code(codes);
         success: function (data) {
             for (var i = 0; i < data.results.length; i++) {
                 $("#config tbody").append("<tr id='element-" + data.results[i].name + "'role='row' class='odd'>" +
-                    "<td class='name' id='" + data.results[i].name + "' style='text-decoration:underline;'>" + data.results[i].name.toUpperCase() + "</td>" +
+                    "<td class='name' id='" + data.results[i].name + "'>" + data.results[i].client_name.toUpperCase() + "</td>" +
                     "<td><input type='number' min='0' step='0.1' max='1' class='form-control valeur' value='" + parseFloat(data.results[i].value) + "'/></td><td class='description'>" + data.results[i].description + "</td><td class='edit'><a><i class='fa fa-floppy-o' aria-hidden='true'></i>Enregistrer</a></td>");
             }
             if ($("#config").length != 0) {
@@ -542,11 +545,12 @@ function callback_hight(data,texte,e) {
         res =  data.results[i].date;
        date_tow = res.split(' ');
        date_only = date_tow[0];
+       console.log((parseFloat(data.results[i].weight_name)*100).toFixed(2));
 
         date.push(date_only);
-        similarity_name.push(parseFloat(data.results[i].weight_name)*100);
-        similarity_coordinates.push(parseFloat(data.results[i].weight_coordinates)*100);
-        similarity_type.push(parseFloat(data.results[i].weight_type)*100);
+        similarity_name.push((parseFloat(data.results[i].weight_name)));
+        similarity_coordinates.push((parseFloat(data.results[i].weight_coordinates)));
+        similarity_type.push((parseFloat(data.results[i].weight_type)));
 
     }
     height_chart += date.length*40;
@@ -663,21 +667,12 @@ function iteration(url,code){
 
 
             success: function (data) {
-                //console.log(url);
-                //console.log('ok');
-                //console.log(data);
+
                 url=data.next;
 
                 for(var i = 0; i<data.results.length; i++) {
                     //console.log('i='+i);
                     select_class= data.results[i].code.split('.');
-                    //console.log('select_class[0]');
-                    //console.log(select_class[0]);
-                    //console.log('key');
-                    //console.log(key);
-                    //value = code[key];
-                    //console.log('value');
-                    //console.log(value);
 
 
                     if(key != select_class[0]){
@@ -763,6 +758,7 @@ $(document).on('change','.classgnselect_2',function(){
     //$('[data-toggle="tooltip"]').tooltip();
 });
 var interval = null;
+var interval_learning=null;
 $(document).on('click','#demare',function (e) {
     var data = {name: 'global-match'};
     var id='';
@@ -835,6 +831,7 @@ function checkfin(id){
 
                         register(error);
                         toastr["error"]('L\'alignement des données a échoué.', {fadeAway: 2000});
+                        $('.attendre').css('display','none');
                     }
                 }
             }
@@ -881,6 +878,60 @@ $(document).on('click','#indice',function (e) {
              '<td>'+ data.initial_date+'</td><td>'+data.affected_rows+'</td><td>'+data.error_rows+'</td><td>'+data.total_rows+'</td> ');
              $('#import_table').css('display', 'block');
              toastr.success('L\'importation va commencer', {fadeAway: 100});*/
+
+        },
+        error: function (request) {
+
+            console.log(request.responseText);
+
+        }
+
+    }).then(function () {
+        $('.attendre').css('display','block');
+        $('.attendre .progress').css('display','none');
+        interval_learning = setInterval("checkfinlearning(" + id + ")", 3500);
+
+    });
+});
+
+
+var c = false;
+function checkfinlearning(id){
+    $.ajax({
+        url: 'http://localhost:8000/scheduled-work/'+id,
+        headers: {
+            'Authorization':'Token '+localStorage.getItem('id_session'),
+            'Content-Type':'application/json'
+        },
+        type: 'GET',
+        dataType: 'json',
+        contentType: "application/json",
+
+        success: function (data) {
+            if(data.detail!= 'Not found.'){
+                if(data.status=='IN PROGRESS' ){
+                    var pourcentage = parseInt(data.affected_rows)/parseInt(data.total_rows);
+                    error = false;
+                    $('.attendre .progress').css('display','block');
+                    $(".attendre .progress-bar ").attr("aria-valuenow", Math.round(pourcentage * 100));
+                    $(".attendre .progress-bar ").css("width",  Math.round(pourcentage * 100)+'%');
+
+                }
+                if(data.status=='FINALIZED' || data.status=='ERROR' ){
+                    c=true;
+                    if(data.status=='FINALIZED'){
+                        clearInterval(interval_learning); // stop the interval
+                        toastr["success"]('Les valeurs ont été généré.', {fadeAway: 2000});
+                    }
+                    if(data.status=='ERROR'){
+                        c=false;
+                        clearInterval(interval_learning); // stop the interval
+
+                        register(error);
+                        toastr["error"]('Une erreur s\' est produite.', {fadeAway: 2000});
+                    }
+                }
+            }
         }
         ,
         error: function (request) {
@@ -889,7 +940,32 @@ $(document).on('click','#indice',function (e) {
 
         }
 
-    }).then(function () {
+    }).then(function(){
 
+        if(c){
+            $('.attendre').css('display','none');
+            get_default()
+        }
     });
-});
+}
+function  get_default() {
+    $.ajax({
+        dataType: 'json',
+        url: 'http://localhost:8000/parameters-score-pertinence',
+        success: function (data) {
+            for (i = 0; i < data.results.length; i++) {
+                if (data.results[i].name == "weight_matching_global") {
+                    $('.par_defaut .type_edit').val(data.results[i].weight_type);
+                    $('.par_defaut .name_edit').val(data.results[i].weight_name);
+                    $('.par_defaut .coordinate_edit').val(data.results[i].weight_coordinates);
+                }
+                }
+
+        }, error: function () {
+            toastr["error"]('Une erreur s\' est produite.', {fadeAway: 2000});
+
+
+        }
+    })
+
+}

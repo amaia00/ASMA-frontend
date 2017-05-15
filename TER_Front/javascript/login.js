@@ -30,6 +30,7 @@ function authentification() {
             console.log(data);
         if (typeof(Storage) !== "undefined") {
             localStorage.setItem("id_session", data.token );
+            toastr["info"]('Vous vous etes connectés');
             document.location.href="index.html"
 
         } else {

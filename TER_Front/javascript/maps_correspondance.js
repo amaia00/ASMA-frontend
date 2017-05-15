@@ -548,7 +548,7 @@ function array_information(gn) {
                     "<td>" + information_data[i].osm_name.toUpperCase() + "</td><td>" + (information_data[i].pertinence_score * 100).toFixed(1) + "%</td><td class='valide'><a>" +
                     "<i class='fa fa-check' aria-hidden='true'></i></a></td> <td class='invalide'><a><i class='fa fa-times' aria-hidden='true'></i></a></td> " +
                     "<td><a class='match_click' href='#' data-toggle='modal' data-target='#myModal'> <i class='fa fa-search-plus' aria-hidden='true'></i></a></td>")
-                /*if (information_data[i].validation == 1) {
+                if (information_data[i].validation == 1) {
                     $('#' + information_data[i].reference_gn + "-" + information_data[i].reference_osm).removeClass('invalider_entity');
                     $('#' + information_data[i].reference_gn + "-" + information_data[i].reference_osm).addClass('valider_entity');
                     $('#' + information_data[i].reference_gn + "-" + information_data[i].reference_osm).find('.valide').removeClass('valide');
@@ -560,7 +560,7 @@ function array_information(gn) {
                     $('#' + information_data[i].reference_gn + "-" + information_data[i].reference_osm).addClass('invalider_entity');
                     $('#' + information_data[i].reference_gn + "-" + information_data[i].reference_osm).find('.valide').removeClass('valide');
                     $('#' + information_data[i].reference_gn + "-" + information_data[i].reference_osm).find('.invalide').removeClass('invalide');
-                }*/
+                }
             }
         },
 
@@ -693,6 +693,12 @@ function tags_function(tags) {
         url: 'http://localhost:8000/tags?reference=' + tags,
         type: 'GET',
         contentType: "application/json",
+        beforeSend: function () {
+            $('.load_type').css('display','block');
+        },
+        complete: function () {
+            $('.load_type').css('display','none');
+        },
         success: function (data) {
             $('.tags').remove();
             for (var i = 0; i < data.results.length; i++) {

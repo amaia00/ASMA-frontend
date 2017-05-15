@@ -94,6 +94,7 @@ function geocode(options) {
 }
 
 function getInformation(data) {
+
     // Affichage des donnees dans le marker
     if (data.status) {
         $(".search .resultats ul").append('<div class="alert alert-danger" role="alert">' +

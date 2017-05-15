@@ -12,19 +12,17 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="css/jquery.spin.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
 <header>
-    <div class="logo"><a href="index.html">Nom de l'application
-        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>	</a>
+    <div class="logo"><a href="index.html"><img src="images/logo.png" /></a>
         <span  style='vertical-align: text-top;' class="glyphicon glyphicon-search nav_menu_left nav_menu_left_search" aria-hidden="true"></span>
         <span  style='vertical-align: text-top;' class="nav_menu_left_search glyphicon glyphicon-remove closebtn form_close" aria-hidden="true"></span>
         <ul id ="menu">
-            <li><a>Importation des données </a></li>
-            <li><a>A propos </a></li>
+            <li><a href="propos.html">A propos </a></li>
             <li><a> Contact </a></li>
 
         </ul>
@@ -113,13 +111,18 @@
         </div>
     </div>
 </div>
-
+<div class="attendre"><div class="pro">
+    <h2 class="modal-title">Patientez</h2>
+    <i class="fa fa-circle-o-notch fa-spin fa-4x fa-fw"></i>
+    <p>Merci de patienter cela peut prendre quelques minutesfc</p>
+</div>
+</div>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="javascript/script_js.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="javascript/import.js"></script>
 
 </body>

@@ -90,7 +90,7 @@ function importation() {
         }
 
     }).then(function(){
-        setInterval("checkfin("+id+")", 5500);
+        setInterval("checkfin("+id+",importation)", 5500);
     });
 }
 
@@ -110,6 +110,7 @@ $('#corr').on('click',function (e) {
         data:  JSON.stringify(data),
 
         success: function (data) {
+            id=data.id
             console.log(data);
             toastr["success"]('Correspondance plannifiée. Elle démarera dans quelque instatnt. Merci de patienter.', {fadeAway: 2000});
             /*$('#import_table tbody').append('<tr><td>'+ data.provider+'</td><td>'+ data.status+'</td>' +
@@ -124,22 +125,27 @@ $('#corr').on('click',function (e) {
 
         }
 
+    }).then(function(){
+            $('.attendre').css('display','block');
+            $('.attendre .progress').css('display','none');
+            interval = setInterval("checkfin("+id+",'correspondance')", 5500);
+
     });
 });
-$('#type_corr').on('click',function (e) {
-    var data = { name : 'type-matching'};
+$('#type_corr').on('click',function () {
+    var data = {name: 'type-matching'};
     console.log(data);
 
     $.ajax({
         url: 'http://localhost:8000/scheduled-work',
         headers: {
-            'Authorization':'Token '+localStorage.getItem('id_session'),
-            'Content-Type':'application/json'
+            'Authorization': 'Token ' + localStorage.getItem('id_session'),
+            'Content-Type': 'application/json'
         },
         type: 'POST',
         dataType: 'json',
         contentType: "application/json",
-        data:  JSON.stringify(data),
+        data: JSON.stringify(data),
 
         success: function (data) {
             console.log(data);
@@ -156,44 +162,52 @@ $('#type_corr').on('click',function (e) {
 
         }
 
+    }).then(function () {
+        $('.attendre').css('display', 'block');
+        $('.attendre .progress').css('display', 'none');
+        interval = setInterval("checkfin(" + id + ",'correspondance)", 5500);
     });
 });
-var b = false;
-function checkfin(id){
-    console.log('checkfin');
-    $.ajax({
-        url: 'http://localhost:8000/scheduled-work/'+id,
-        headers: {
-            'Authorization':'Token '+localStorage.getItem('id_session'),
-            'Content-Type':'application/json'
-        },
-        type: 'GET',
-        dataType: 'json',
-        contentType: "application/json",
+    var b = false;
 
-        success: function (data) {
-            if(data.detail!= 'Not found.'){
-                if(data.status=='FINALIZED' || data.status=='ERROR' ){
-                    b=true;
-                    if(data.status=='FINALIZED'){
-                        toastr["success"]('Importation des données réussite.', {fadeAway: 2000});
-                    }
-                    if(data.status=='ERROR'){
-                        toastr["error"]('L\'importation des données a échoué.', {fadeAway: 2000});
+    function checkfin(id, type) {
+        $.ajax({
+            url: 'http://localhost:8000/scheduled-work/' + id,
+            headers: {
+                'Authorization': 'Token ' + localStorage.getItem('id_session'),
+                'Content-Type': 'application/json'
+            },
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/json",
+
+            success: function (data) {
+                if (data.detail != 'Not found.') {
+                    if (data.status == 'FINALIZED' || data.status == 'ERROR') {
+                        b = true;
+                        if (data.status == 'FINALIZED') {
+                            toastr["success"]( "L'action a  réussit.", {fadeAway: 2000});
+                            $('.attendre').css('display','none');
+                            clearInterval(interval);
+                        }
+                        if (data.status == 'ERROR') {
+                            toastr["error"]("L'action a échoué.", {fadeAway: 2000});
+                            $('.attendre').css('display','none');
+                            clearInterval(interval);
+                        }
                     }
                 }
             }
-        }
-        ,
-        error: function (request) {
+            ,
+            error: function (request) {
 
-            console.log(request.responseText);
+                console.log(request.responseText);
 
-        }
+            }
 
-    }).then(function(){
-        if(b){
-            $('#patientez').modal('hidde');
-        }
-    });
-}
+        }).then(function () {
+            if (b) {
+                //$('#patientez').modal('hidde');
+            }
+        });
+    }
